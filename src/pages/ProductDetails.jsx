@@ -1,5 +1,5 @@
-import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { FiChevronLeft } from "react-icons/fi";
 // import { useEffect, useState } from 'react';
 
 const ProductDetails = () => {
@@ -18,7 +18,9 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <Link to="/products" className="text-gray-700 hover:text-red-800 ml-2 absolute top-20 left-10">← Back to Products</Link>
+      <Link to="/products" className="flex gap-2 items-center text-gray-700 hover:text-red-800 ml-2 absolute top-25 left-10">
+      <FiChevronLeft /> Back to Products
+      </Link>
       <div className='flex justify-center items-center h-screen w-full gap-6'>
         <div className='flex justify-self-center items-center border border-gray-200 rounded-lg shadow p-6 m-10'>
           <img src={product.image} alt={product.name} className='w-80 h-80 object-contain'/>

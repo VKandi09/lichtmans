@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css"; // core styles
+import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -29,9 +29,9 @@ const products = [
 
 const Featured = () => {
   return (
-    <section className="h-screen">
+    <section className="h-screen pt-10">
       <div>
-        <h1 className="text-5xl text-gray-700 font-bold text-center my-10">Featured Products</h1>
+        <h1 className="text-5xl text-gray-700 font-bold text-center my-10 top-3">Featured Products</h1>
         <Swiper
           slidesPerView={3}
           spaceBetween={30}
@@ -40,12 +40,17 @@ const Featured = () => {
           pagination={{ clickable: true }}
           navigation={true}
           modules={[Autoplay, Pagination, Navigation]}
-          className="w-full max-w-6xl"
+          breakpoints={{
+            320: { slidesPerView: 1 },
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="w-full max-w-6xl h-70"
         >
           {products.map((product) => (
             <SwiperSlide>
-              <div className="bg-white shadow-lg rounded-lg overflow-hidden p-4">
-                <img src={product.image} alt={product.name} className="w-full h-64 object-contain mb-4"></img>
+              <div className="bg-white shadow-lg border border-gray-400 rounded-lg overflow-hidden p-4">
+                <img src={product.image} alt={product.name} className="w-full h-40 object-contain mb-4"></img>
                 <h2 className="text-xl text-gray-700 font-semibold text-center">{product.name}</h2>
               </div>
             </SwiperSlide>

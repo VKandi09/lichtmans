@@ -1,5 +1,7 @@
+import BestSellers from './BestSellers';
 import Featured from './Featured';
 import Hero from './Hero';
+import NewArrivals from './NewArrivals';
 
 
 const Home = () => {
@@ -8,6 +10,8 @@ const Home = () => {
         <main className='flex-1'>
             <Hero />
             <Featured />
+            <NewArrivals />
+            <BestSellers />
         </main>
     </div>
   )

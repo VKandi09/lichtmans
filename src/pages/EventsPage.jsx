@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -28,7 +28,7 @@ const EventsPage = () => {
               (event) => event.date.toDateString() === date.toDateString()
             );
             return hasEvent ? (
-              <div className="mt-1 w-2 h-2 bg-red-500 rounded-full mx-auto" />
+              <div className="mt-1 w-2 h-2 bg-red-800 rounded-full mx-auto" />
             ) : null;
           }}
         />

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FiMenu, FiX, FiChevronDown, FiChevronUp, FiUser, FiSearch } from "react-icons/fi";
+import SearchBox from "./Search";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -50,7 +51,6 @@ const Header = () => {
           <span className="hidden sm:inline">Lichtman's Wine & Liquor Store Inc.</span>
           <span className="sm:hidden">Lichtman's</span>
         </Link>
-        {/* <Link to="/" className="text-sm sm:text-base md:text-xl font-bold flex-shrink-0">Lichtman's Wine & Liquor Store Inc.</Link> */}
         <nav className="hidden md:flex items-center gap-6 relative">
           {menuItems.map((item, index) => (
             <div
@@ -62,7 +62,7 @@ const Header = () => {
                   onMouseEnter={() => setDesktopActiveDropdown(index)}
                   onMouseLeave={() => setDesktopActiveDropdown(null)}
                 >
-                   <button
+                  <button
                       className="text-gray-700 hover:text-red-800 font-medium cursor-pointer"
                     >
                     {item.title}
@@ -91,12 +91,13 @@ const Header = () => {
                     {item.title}
                   </button>
               )}
-             
+            
             </div>
           ))}
         </nav>
         {/* Search box */}
-        <div className="flex items-center border-gray-300 border-2 rounded-xl h-10 w-42 justify-between md:w-48 lg:w-64 focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent ">
+        <SearchBox />
+        {/* <div className="flex items-center border-gray-300 border-2 rounded-xl h-10 w-42 justify-between md:w-48 lg:w-64 focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent ">
           <input
             type="text"
             placeholder="Search for items..."
@@ -105,7 +106,7 @@ const Header = () => {
           <button className="hidden md:inline-block text-gray-700 px-3 py-1 hover:text-red-800 focus:outline-none">
             <FiSearch size={20} />
           </button>
-        </div>
+        </div> */}
         <div>
           <FiUser size={25} className="text-gray-700 hover:text-red-800 cursor-pointer" />
         </div>
