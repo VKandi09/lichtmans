@@ -3,8 +3,20 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 const initialEvents = [
-  { date: new Date(2025, 9, 5), title: "Wine Tasting Event", time: "6:00 PM", location: "Store 1", details: "Come taste new wines!" },
-  { date: new Date(2025, 9, 10), title: "Whiskey Workshop", time: "5:00 PM", location: "Store 2", details: "Learn whiskey making." },
+    { 
+        date: new Date(2025, 9, 5), 
+        title: "Wine Tasting Event", 
+        time: "6:00 PM", 
+        location: "Store 1", 
+        details: "Come taste new wines!" 
+    },
+    { 
+        date: new Date(2025, 9, 10), 
+        title: "Whiskey Workshop", 
+        time: "5:00 PM", 
+        location: "Store 2", 
+        details: "Learn whiskey making." 
+    },
 ];
 
 const EventsPage = () => {

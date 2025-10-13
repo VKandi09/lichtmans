@@ -18,7 +18,7 @@ const SearchBox = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex items-center border-gray-300 border-2 rounded-xl h-10 w-80 justify-between md:w-48 lg:w-64 focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent"
+      className="flex items-center border-gray-300 border-2 rounded-full h-10 w-80 justify-between md:w-48 lg:w-64 focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent"
     >
       <input
         type="text"

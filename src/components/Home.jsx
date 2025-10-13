@@ -10,8 +10,8 @@ const Home = () => {
         <main className='flex-1'>
             <Hero />
             <Featured />
-            <NewArrivals />
-            <BestSellers />
+            {/* <NewArrivals />
+            <BestSellers /> */}
         </main>
     </div>
   )

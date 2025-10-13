@@ -19,7 +19,7 @@ const ProductDetails = () => {
   return (
     <div>
       <Link to="/products" className="flex gap-2 items-center text-gray-700 hover:text-red-800 ml-2 absolute top-25 left-10">
-      <FiChevronLeft /> Back to Products
+        <FiChevronLeft /> Back to Products
       </Link>
       <div className='flex justify-center items-center h-screen w-full gap-6'>
         <div className='flex justify-self-center items-center border border-gray-200 rounded-lg shadow p-6 m-10'>

@@ -12,46 +12,49 @@ const Header = () => {
   const menuItems = [
     {
       title: "Wines",
-      links: [
-        { name: "Red Wine", path: "/products" },
-        { name: "White Wine", path: "/products" },
-        { name: "Rosé Wine", path: "/products" },
-        { name: "Sparkling Wine", path: "/products" },
-        { name: "Dessert Wine", path: "/products" },
-      ]
+      path: "/products?type=wine",
+      // links: [
+      //   { name: "Red Wine", path: "/products" },
+      //   { name: "White Wine", path: "/products" },
+      //   { name: "Rosé Wine", path: "/products" },
+      //   { name: "Sparkling Wine", path: "/products" },
+      //   { name: "Dessert Wine", path: "/products" },
+      // ]
     },
     {
       title: "Spirits",
       links: [
-        { name: "Whiskey", path: "/products" },
-        { name: "Vodka", path: "/products" },
-        { name: "Rum", path: "/products" },
-        { name: "Gin", path: "/products" },
-        { name: "Tequila", path: "/products" },
+        { name: "Whiskey", path: "/products?type=whiskey" },
+        { name: "Vodka", path: "/products?type=vodka" },
+        { name: "Tequila", path: "/products?type=tequila" },
       ]
     },
     {
-      title: "Top Sellers",
-      links: [
-        { name: "Bestselling Wines", path: "/products" },
-        { name: "Bestselling Spirits", path: "/products" },
-        { name: "Bestselling Beers", path: "/products" },
-      ]
+      title: "Specials",
+      path: "/products/specials",
+      // links: [
+      //   { name: "Wines", path: "/products/specials/wines" },
+      //   { name: "Spirits", path: "/products/specials/" },
+      // ]
     },
     {
       title: "Events",
       path: "/events",
     },
+    {
+      title: "Contact Us",
+      path: "/contact",
+    },
   ];
 
   return (
     <header className="fixed top-0 left-0 bg-white w-full shadow z-50">
-      <div className="max-w-7xl mx-auto px-4 flex py-4 items-center justify-between w-full">
-        <Link to="/" className="text-gray-700 hover:text-red-800 text-base md:text-xl font-bold truncate mr-4">
+      <div className="max-w-8xl mx-auto flex px-8 py-4 items-center justify-between w-full">
+        <Link to="/" className="text-gray-700 hover:text-red-800 text-base md:text-xl font-bold">
           <span className="hidden sm:inline">Lichtman's Wine & Liquor Store Inc.</span>
           <span className="sm:hidden">Lichtman's</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-6 relative">
+        <nav className="hidden md:flex items-start gap-8 relative">
           {menuItems.map((item, index) => (
             <div
               key={index}
@@ -107,9 +110,9 @@ const Header = () => {
             <FiSearch size={20} />
           </button>
         </div> */}
-        <div>
+        {/* <div>
           <FiUser size={25} className="text-gray-700 hover:text-red-800 cursor-pointer" />
-        </div>
+        </div> */}
         {/* Mobile Menu Button */}
         <button
           className="md:hidden text-gray-700 hover:text-red-800 focus:outline-none relative z-[60] flex-shrink-0 cursor-pointer"
