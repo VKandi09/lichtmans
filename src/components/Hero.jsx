@@ -9,9 +9,11 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const images = [
-    { src: "/images/beer-banner.png", path: "/beer" },
-    { src: "/images/bourbon-banner.png", path: "/bourbon" },
-    { src: "/images/wine-banner.png", path: "/wine" },
+    { src: "/images/wine-banner.png", path: "/products/wine" },
+    { src: "/images/bourbon-banner.png", path: "/producst/bourbon" },
+    { src: "/images/vodka-banner.png", path: "/producst/vodka" },
+    { src: "/images/whiskey-banner.png", path: "/producst/whiskey" },
+    { src: "/images/tequila-banner.png", path: "/producst/tequila" },
   ];
 
   return (
@@ -27,7 +29,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="w-full md:w-3/4 mx-auto mb-15"
+          className="w-full md:w-3/4 mx-auto mb-5"
         >
           <Swiper
             modules={[Autoplay, Pagination]}
@@ -56,7 +58,7 @@ const Hero = () => {
             ))}
           </Swiper>
         </motion.div>
-        <div className="custom-pagination flex justify-center mt-4"></div>
+        <div className="custom-pagination flex justify-center mb-6"></div>
         {/* Title */}
         <motion.h1
           className="text-5xl text-rose-900 font-bold mb-6"
