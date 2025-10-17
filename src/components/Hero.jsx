@@ -9,11 +9,11 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const images = [
-    { src: "/images/wine-banner.png", path: "/products/wine" },
-    { src: "/images/bourbon-banner.png", path: "/producst/bourbon" },
-    { src: "/images/vodka-banner.png", path: "/producst/vodka" },
-    { src: "/images/whiskey-banner.png", path: "/producst/whiskey" },
-    { src: "/images/tequila-banner.png", path: "/producst/tequila" },
+    { src: "/images/wine-banner.png", path: "/products?type=wine" },
+    { src: "/images/bourbon-banner.png", path: "/products?type=bourbon" },
+    { src: "/images/vodka-banner.png", path: "/products?type=vodka" },
+    { src: "/images/whiskey-banner.png", path: "/products?type=whiskey" },
+    { src: "/images/tequila-banner.png", path: "/products?type=tequila" },
   ];
 
   return (
@@ -38,7 +38,7 @@ const Hero = () => {
             loop={true}
             autoplay={{ delay: 5500, disableOnInteraction: false }}
             pagination={{ clickable: true, el: ".custom-pagination", }}
-            className=""
+            className="w-full pb-10"
           >
             {images.map((img, index) => (
               <SwiperSlide key={index}>
@@ -51,7 +51,7 @@ const Hero = () => {
                   <img
                     src={img.src}
                     alt={img.path}
-                    className="w-full h-[400px] object-cover shadow-md hover:shadow-xl transition-shadow"
+                    className="w-full h-[400px] object-contain shadow-md hover:shadow-xl transition-shadow"
                   />
                 </motion.div>
               </SwiperSlide>
@@ -61,7 +61,7 @@ const Hero = () => {
         <div className="custom-pagination flex justify-center mb-6"></div>
         {/* Title */}
         <motion.h1
-          className="text-5xl text-rose-900 font-bold mb-6"
+          className="text-5xl text-rose-900 font-bold mb-10 mt-20"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}

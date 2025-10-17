@@ -1,11 +1,11 @@
 import { useLocation, Link } from 'react-router-dom';
-import { FiChevronLeft } from "react-icons/fi";
-// import { useEffect, useState } from 'react';
+import { FiChevronLeft, FiX } from "react-icons/fi";
+import { useState } from 'react';
 
 const ProductDetails = () => {
-  // const { id } = useParams();
   const location = useLocation();
   const product = location.state?.product;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!product) {
     return (
@@ -17,15 +17,16 @@ const ProductDetails = () => {
   }
 
   return (
-    <div>
-      <Link to="/products" className="flex gap-2 items-center text-gray-700 hover:text-red-800 ml-2 absolute top-25 left-10">
+    <div className='relative'>
+      <Link to="/products" className="flex gap-2 items-center text-gray-700 hover:text-red-800 absolute top-15 left-10">
         <FiChevronLeft /> Back to Products
       </Link>
-      <div className='flex justify-center items-center h-screen w-full gap-6'>
-        <div className='flex justify-self-center items-center border border-gray-200 rounded-lg shadow p-6 m-10'>
-          <img src={product.image} alt={product.name} className='w-80 h-80 object-contain'/>
+      <div className='flex items-center h-screen w-full gap-6'>
+        <div className='flex flex-col justify-self-start items-center p-8 mx-45 border border-gray-200 rounded-lg shadow cursor-zoom-in hover:scale-[1.02] transition-transform duration-300'
+          onClick={() => setIsModalOpen(true)} >
+          <img src={product.image && product.image !== "" ? product.image : "/images/placeholder-bottle.png"} alt={product.name} className='w-100 h-150 object-contain'/>
         </div>
-        <div className=' flex flex-col items-start justify-start'> 
+        <div className='flex flex-col items-start justify-start'> 
           <h1 className='text-2xl font-semibold text-gray-800 mb-4'>{product.name}</h1>
           <p className="text-xl text-gray-600 mb-2">${product.price}</p>
           {product.stock === 0 ? (
@@ -35,6 +36,27 @@ const ProductDetails = () => {
           )}
         </div>
       </div>
+      {/* Image Modal Popup */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="relative">
+            {/* Close button */}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute -top-8 -right-8 bg-white text-black rounded-full p-2 hover:bg-gray-200 transition"
+            >
+              <FiX size={20} />
+            </button>
+
+            {/* Large image */}
+            <img
+              src={product.image && product.image !== "" ? product.image : "/images/placeholder-bottle.png"}
+              alt={product.name}
+              className="max-w-[90vw] max-h-[80vh] object-contain rounded-lg shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

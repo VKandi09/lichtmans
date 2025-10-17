@@ -64,7 +64,7 @@ const ProductsList = () => {
     return true;
   });
 
-  if (loading) return <p>Loading products...</p>;
+  if (loading) return <p className='top-20'>Loading products...</p>;
 
   return (
     <div className="flex flex-col lg:flex-row max-w-7xl mx-auto my-24 gap-6">
