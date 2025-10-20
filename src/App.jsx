@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { AllRoutes } from './routes/AllRoutes';
+// import { AdminRoutes } from './routes/AdminRoutes';
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
         <AllRoutes />
       </main>
       <Footer />
+      {/* <AdminRoutes /> */}
     </div>
   )
 }

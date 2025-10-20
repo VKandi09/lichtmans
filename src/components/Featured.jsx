@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Featured = () => {
   const [featured, setFeatured] = useState([]);
@@ -33,33 +34,37 @@ const Featured = () => {
           Featured Products
         </h1>
         <div className="flex justify-center">
-          <div className="
-            grid
-            gap-6
-            justify-items-center
-            justify-center
-            auto-cols-fr
-            grid-flow-row
-            w-full
-            max-w-[1200px]
+          <div
+            className="
+              grid
+              gap-6
+              justify-items-center
+              justify-center
+              auto-cols-fr
+              grid-flow-row
+              w-full
+              max-w-[1200px]
             "
-          style={{
-            gridTemplateColumns: `repeat(auto-fit, minmax(200px, 1fr))`,
-          }}>
+            style={{
+              gridTemplateColumns: `repeat(auto-fit, minmax(200px, 1fr))`,
+            }}
+          >
             {featured.map((item, index) => (
-              <div 
+              <Link
                 key={index}
+                to={`/products?type=${(item.type)}`}
                 className="bg-white w-60 h-60 rounded-lg shadow hover:shadow-lg transition duration-300 border border-gray-200 p-4 flex flex-col items-center cursor-pointer"
               >
                 <img 
                   src={item.image || '/images/placeholder-bottle.png'} 
                   alt={item.type} 
                   className="h-40 w-40 object-contain mb-3"
+                  onError={(e) => { e.target.onerror = null; e.target.src = '/images/placeholder-bottle.png'; }}
                 />
                 <h2 className="text-md font-semibold text-gray-700 text-center">
                   {item.type}
                 </h2>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
