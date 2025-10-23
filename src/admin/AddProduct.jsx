@@ -9,6 +9,7 @@ const AddProduct = () => {
     name: "",
     type: "",
     subType: "",
+    description: "",
     brand: "",
     price: "",
     quantity: "",
@@ -37,6 +38,7 @@ const AddProduct = () => {
         setForm({
         name: "",
         type: "",
+        description: "",
         brand: "",
         special: false,
         price: "",
