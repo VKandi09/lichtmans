@@ -10,7 +10,7 @@ const Hero = () => {
 
   const images = [
     { src: "/images/wine-banner.png", path: "/products?type=wine" },
-    { src: "/images/bourbon-banner.png", path: "/products?type=bourbon" },
+    { src: "/images/bourbon-banner.png", path: "/products?subType=bourbon" },
     { src: "/images/vodka-banner.png", path: "/products?type=vodka" },
     { src: "/images/whiskey-banner.png", path: "/products?type=whiskey" },
     { src: "/images/tequila-banner.png", path: "/products?type=tequila" },

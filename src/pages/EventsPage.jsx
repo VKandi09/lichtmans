@@ -1,31 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-const initialEvents = [
-    { 
-        date: new Date(2025, 9, 5), 
-        title: "Wine Tasting Event", 
-        time: "6:00 PM", 
-        location: "Store 1", 
-        details: "Come taste new wines!" 
-    },
-    { 
-        date: new Date(2025, 9, 10), 
-        title: "Whiskey Workshop", 
-        time: "5:00 PM", 
-        location: "Store 2", 
-        details: "Learn whiskey making." 
-    },
-];
+const BASE_URL = "http://localhost:5001/api/events";
 
 const EventsPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [events] = useState(initialEvents);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // Fetch events from backend
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(BASE_URL);
+        const data = await res.json();
+
+        // Convert string dates to Date objects
+        const formattedEvents = data.map((event) => ({
+          ...event,
+          date: new Date(event.date),
+        }));
+
+        setEvents(formattedEvents);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching events:", err);
+        setError("Failed to load events");
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  // Filter events for the selected date
   const eventsForDate = events.filter(
     (event) => event.date.toDateString() === selectedDate.toDateString()
   );
+
+  if (loading) return <p className="text-center mt-24">Loading events...</p>;
+  if (error) return <p className="text-center text-red-600 mt-24">{error}</p>;
 
   return (
     <div className="max-w-6xl mx-auto mt-24 p-4 flex flex-col md:flex-row gap-6">
@@ -56,9 +73,15 @@ const EventsPage = () => {
           <p>No events on this day.</p>
         ) : (
           eventsForDate.map((event, index) => (
-            <div key={index} className="border p-4 rounded-lg shadow hover:shadow-md transition">
+            <div
+              key={index}
+              className="border p-4 rounded-lg shadow hover:shadow-md transition"
+            >
               <h3 className="font-bold text-lg">{event.title}</h3>
-              <p className="text-sm text-gray-500">{event.time} | {event.location}</p>
+              <h4 className="text-md">Sponsored by : <span className="font-bold">{event.sponsors}</span></h4>
+              <p className="text-sm text-gray-500">
+                {event.time} | {event.location}
+              </p>
               <p className="mt-2">{event.details}</p>
             </div>
           ))

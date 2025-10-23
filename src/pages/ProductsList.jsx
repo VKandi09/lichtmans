@@ -11,6 +11,7 @@ const ProductsList = () => {
   const query = useQuery();
   const searchTerm = query.get("search")?.toLowerCase() || "";
   const typeFilter = query.get("type")?.toLowerCase() || "";
+  const subTypeFilter = query.get("subType")?.toLowerCase() || "";
 
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [priceRange, setPriceRange] = useState([0, 5000]);
@@ -34,6 +35,8 @@ const ProductsList = () => {
           url = "http://localhost:5001/api/products/specials";
         } else if (typeFilter) {
           url += `?type=${typeFilter}`;
+        } else if (subTypeFilter) {
+          url += `?subType=${subTypeFilter}`;
         }
         const res = await fetch(url);
         console.log("Fetching products from:", url);
@@ -53,7 +56,7 @@ const ProductsList = () => {
       }
     };
     fetchProducts();
-  }, [location.pathname, typeFilter]);
+  }, [location.pathname, subTypeFilter, typeFilter]);
 
   // Filter products dynamically
   const displayedProducts = filteredProducts.filter((product) => {
@@ -99,12 +102,18 @@ const ProductsList = () => {
       </aside>
 
       {/* Products Grid */}
-      <div className='flex flex-col w-full lg:w-3/4 px-4'>
+      <div className='flex flex-col w-full lg:w-full px-4'>
         <h2 className="text-2xl font-bold mb-4">
-          {typeFilter ? `${capitalizeWords(typeFilter)} Products` : location.pathname === "/products/specials" ? "Special Products" : "All Products"}
+          { subTypeFilter
+            ? `${capitalizeWords(subTypeFilter)} Products`
+            : typeFilter
+            ? `${capitalizeWords(typeFilter)} Products`
+            : location.pathname === "/products/specials"
+            ? "Special Products"
+            : "All Products"}
         </h2>
         <p className="text-gray-600 mb-6">{displayedProducts.length === 1 ? `${displayedProducts.length} product found` : `${displayedProducts.length} products found`}</p>
-        <main className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <main className="flex-1 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4">
           {displayedProducts.length === 0 ? (
             <p className="text-gray-600 col-span-full text-center">No products found.</p>
           ) : (

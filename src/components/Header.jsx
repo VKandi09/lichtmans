@@ -38,6 +38,10 @@ const Header = () => {
       // ]
     },
     {
+      title: "All Products",
+      path: "/products",
+    },
+    {
       title: "Events",
       path: "/events",
     },
