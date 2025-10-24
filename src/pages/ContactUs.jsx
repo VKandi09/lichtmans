@@ -19,12 +19,12 @@ const ContactUs = () => {
 
   return (
     <div className="flex flex-col items-center max-h-screen p-15">
-      <h1 className="text-3xl font-semibold mb-8 text-red-800">Contact Us</h1>
+      <h1 className="text-3xl font-semibold mb-8 text-rose-800">Contact Us</h1>
       {contact ? (
-        <div className="bg-white border border-gray-300 shadow rounded-2xl p-8 w-full max-w-lg space-y-6 hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white border border-gray-300 shadow rounded-2xl p-8 w-full max-w-3xl space-y-6 hover:shadow-lg transition-shadow duration-300">
           {/* Phone */}
           <div className="flex items-center space-x-4">
-            <FiPhone className="text-red-800 text-2xl" />
+            <FiPhone className="text-rose-800 text-2xl" />
             <div>
               <h2 className="font-medium text-lg text-gray-700">Phone</h2>
               <p className="text-gray-600">{contact.phone}</p>
@@ -33,7 +33,7 @@ const ContactUs = () => {
 
           {/* Email */}
           <div className="flex items-center space-x-4">
-            <FiMail className="text-red-800 text-2xl" />
+            <FiMail className="text-rose-800 text-2xl" />
             <div>
               <h2 className="font-medium text-lg text-gray-700">Email</h2>
               <p className="text-gray-600">{contact.email}</p>
@@ -42,7 +42,7 @@ const ContactUs = () => {
 
           {/* Address */}
           <div className="flex items-center space-x-4">
-            <FiMapPin className="text-red-800 text-2xl" />
+            <FiMapPin className="text-rose-800 text-2xl" />
             <div>
               <h2 className="font-medium text-lg text-gray-700">Address</h2>
               <p className="text-gray-600">{contact.address}</p>

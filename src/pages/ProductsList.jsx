@@ -18,9 +18,11 @@ const ProductsList = () => {
   const [brands, setBrands] = useState([]);
   const [types, setTypes] = useState([]);
   const [subTypes, setSubTypes] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState('');
-  const [selectedType, setSelectedType] = useState('');
-  const [selectedSubType, setSelectedSubType] = useState('');
+
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedSubTypes, setSelectedSubTypes] = useState([]);
+
   const [sortOption, setSortOption] = useState('');
   const [priceRange, setPriceRange] = useState([0, 5000]);
   const [loading, setLoading] = useState(true);
@@ -74,11 +76,20 @@ const ProductsList = () => {
     fetchProducts();
   }, [location.pathname, typeFilter, subTypeFilter]);
 
+    // Handle checkbox selection toggles
+  const handleCheckboxChange = (value, selectedList, setSelectedList) => {
+    if (selectedList.includes(value)) {
+      setSelectedList(selectedList.filter((v) => v !== value));
+    } else {
+      setSelectedList([...selectedList, value]);
+    }
+  };
+
   // Apply filters dynamically
   let displayedProducts = filteredProducts.filter((product) => {
-    if (selectedBrand && product.brand.toLowerCase() !== selectedBrand) return false;
-    if (selectedType && product.type.toLowerCase() !== selectedType) return false;
-    if (selectedSubType && product.subType.toLowerCase() !== selectedSubType) return false;
+    if (selectedBrands.length && !selectedBrands.includes(product.brand.toLowerCase())) return false;
+    if (selectedTypes.length && !selectedTypes.includes(product.type.toLowerCase())) return false;
+    if (selectedSubTypes.length && !selectedSubTypes.includes(product.subType.toLowerCase())) return false;
     if (product.price < priceRange[0] || product.price > priceRange[1]) return false;
     if (searchTerm && !product.name.toLowerCase().includes(searchTerm)) return false;
     return true;
@@ -94,119 +105,145 @@ const ProductsList = () => {
   if (loading) return <p className='mt-20 text-center text-gray-600'>Loading products...</p>;
 
   return (
-    <div className="flex flex-col lg:flex-row max-w-8xl mx-auto my-10 gap-6">
-      {/* Sidebar Filter */}
-      <aside className="w-full lg:w-1/4 p-6 border-r border-gray-300">
-        <h2 className="text-xl font-semibold mb-6">Filter Products</h2>
-
-        {/* Brand Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium mb-2">Brand</h3>
-          <select
-            value={selectedBrand}
-            onChange={(e) => setSelectedBrand(e.target.value)}
-            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-800 focus:border-transparent focus:outline-none"
-          >
-            <option value="">All Brands</option>
-            {brands.map((brand, idx) => (
-              <option key={idx} value={brand.toLowerCase()}>
-                {brand}
-              </option>
-            ))}
-          </select>
+    <div className='flex flex-col max-w-8xl mx-auto p-4'>
+      <div className='flex flex-col items-center justify-center mt-8 text-center'>          
+          <h1 className="text-2xl font-bold mb-4">
+            {subTypeFilter
+              ? `${capitalizeWords(subTypeFilter)}`
+              : typeFilter
+              ? `${capitalizeWords(typeFilter)}`
+              : location.pathname === "/products/specials"
+              ? "Special"
+              : "All Products"}
+          </h1>
+          <p className="text-gray-600 mb-6">
+            {displayedProducts.length === 1
+              ? `${displayedProducts.length} product found`
+              : `${displayedProducts.length} products found`}
+          </p>
         </div>
+      <div className="flex flex-col lg:flex-row my-10 gap-6">
+        {/* Sidebar Filter */}
+        <aside className="w-full lg:w-1/4 p-6 border-r border-gray-300 sticky top-20 self-start">
+          <h2 className="text-xl font-semibold mb-6">Filter Products</h2>
 
-        {/* Type Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium mb-2">Type</h3>
-          <select
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-800 focus:border-transparent focus:outline-none"
-          >
-            <option value="">All Types</option>
-            {types.map((type, idx) => (
-              <option key={idx} value={type.toLowerCase()}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
+          {/* Brand Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-2">Brand</h3>
+            <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+              {brands.map((brand, idx) => (
+                <label key={idx} className="flex items-center gap-2 text-gray-700">
+                  <input
+                    type="checkbox"
+                    value={brand.toLowerCase()}
+                    checked={selectedBrands.includes(brand.toLowerCase())}
+                    onChange={() => handleCheckboxChange(brand.toLowerCase(), selectedBrands, setSelectedBrands)}
+                    className="accent-rose-800"
+                  />
+                  {brand}
+                </label>
+              ))}
+            </div>
+          </div>
 
-        {/* Sub-Type Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium mb-2">Sub-Type</h3>
-          <select
-            value={selectedSubType}
-            onChange={(e) => setSelectedSubType(e.target.value)}
-            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-800 focus:border-transparent focus:outline-none"
-          >
-            <option value="">All Sub-Types</option>
-            {subTypes.map((sub, idx) => (
-              <option key={idx} value={sub.toLowerCase()}>
-                {sub}
-              </option>
-            ))}
-          </select>
-        </div>
+          {/* Type Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-2">Type</h3>
+            <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+              {types.map((type, idx) => (
+                <label key={idx} className="flex items-center gap-2 text-gray-700">
+                  <input
+                    type="checkbox"
+                    value={type.toLowerCase()}
+                    checked={selectedTypes.includes(type.toLowerCase())}
+                    onChange={() => handleCheckboxChange(type.toLowerCase(), selectedTypes, setSelectedTypes)}
+                    className="accent-rose-800"
+                  />
+                  {type}
+                </label>
+              ))}
+            </div>
+          </div>
 
-        {/* Price Range Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium mb-2">Price</h3>
-          <input
-            type="range"
-            min={0}
-            max={5000}
-            value={priceRange[1]}
-            onChange={(e) => setPriceRange([0, Number(e.target.value)])}
-            className="w-full h-2 rounded-lg accent-red-800 cursor-pointer"
-          />
-          <p className="text-gray-600 mt-1">Up to ${priceRange[1]}</p>
-        </div>
+          {/* Sub-Type Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-2">Sub-Type</h3>
+            <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+              {subTypes.map((sub, idx) => (
+                <label key={idx} className="flex items-center gap-2 text-gray-700">
+                  <input
+                    type="checkbox"
+                    value={sub.toLowerCase()}
+                    checked={selectedSubTypes.includes(sub.toLowerCase())}
+                    onChange={() => handleCheckboxChange(sub.toLowerCase(), selectedSubTypes, setSelectedSubTypes)}
+                    className="accent-rose-800"
+                  />
+                  {sub}
+                </label>
+              ))}
+            </div>
+          </div>
 
-        {/* Sort Option */}
-        <div className="mb-6">
-          <h3 className="font-medium mb-2">Sort By</h3>
-          <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-red-800 focus:border-transparent focus:outline-none"
-          >
-            <option value="">Default</option>
-            <option value="lowToHigh">Price: Low to High</option>
-            <option value="highToLow">Price: High to Low</option>
-          </select>
-        </div>
-      </aside>
+          {/* Price Range Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-2">Price</h3>
+            <input
+              type="range"
+              min={0}
+              max={5000}
+              value={priceRange[1]}
+              onChange={(e) => setPriceRange([0, Number(e.target.value)])}
+              className="w-full h-2 rounded-lg accent-rose-800 cursor-pointer"
+            />
+            <p className="text-gray-600 mt-1">Up to ${priceRange[1]}</p>
+          </div>
 
-      {/* Products Grid */}
-      <div className="flex flex-col w-full px-2 lg:px-4">
-        <h2 className="text-2xl font-bold mb-4">
-          {subTypeFilter
-            ? `${capitalizeWords(subTypeFilter)} Products`
-            : typeFilter
-            ? `${capitalizeWords(typeFilter)} Products`
-            : location.pathname === "/products/specials"
-            ? "Special Products"
-            : "All Products"}
-        </h2>
-        <p className="text-gray-600 mb-6">
-          {displayedProducts.length === 1
-            ? `${displayedProducts.length} product found`
-            : `${displayedProducts.length} products found`}
-        </p>
+          {/* Sort Option */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-2">Sort By</h3>
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-rose-800 focus:border-transparent focus:outline-none"
+            >
+              <option value="">Default</option>
+              <option value="lowToHigh">Price: Low to High</option>
+              <option value="highToLow">Price: High to Low</option>
+            </select>
+          </div>
+        </aside>
 
-        <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {displayedProducts.length === 0 ? (
-            <p className="text-gray-600 col-span-full text-center">
-              No products found.
+        {/* Products Grid */}
+        <div className="flex flex-col w-full px-2 lg:px-4">
+          {/* <div className='items-center justify-center mb-6'>          
+            <h1 className="text-2xl font-bold mb-4">
+              {subTypeFilter
+                ? `${capitalizeWords(subTypeFilter)}`
+                : typeFilter
+                ? `${capitalizeWords(typeFilter)}`
+                : location.pathname === "/products/specials"
+                ? "Special"
+                : "All Products"}
+            </h1>
+            <p className="text-gray-600 mb-6">
+              {displayedProducts.length === 1
+                ? `${displayedProducts.length} product found`
+                : `${displayedProducts.length} products found`}
             </p>
-          ) : (
-            displayedProducts.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))
-          )}
-        </main>
+          </div> */}
+
+          <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {displayedProducts.length === 0 ? (
+              <p className="text-gray-600 col-span-full text-center">
+                No products found.
+              </p>
+            ) : (
+              displayedProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );

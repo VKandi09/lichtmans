@@ -23,7 +23,7 @@ const ProductDetails = () => {
       {/* Back button */}
       <Link
         to="/products"
-        className="flex gap-2 items-center text-gray-700 hover:text-red-800 absolute top-8 left-8"
+        className="flex gap-2 items-center text-gray-700 hover:text-rose-800 absolute top-8 left-8"
       >
         <FiChevronLeft /> Back to Products
       </Link>
@@ -48,7 +48,7 @@ const ProductDetails = () => {
 
         {/* Product Info */}
         <div className="flex flex-col items-start justify-start w-full lg:w-1/2 gap-5">
-          <h1 className="text-3xl font-semibold text-gray-800 mb-2">
+          <h1 className="text-3xl font-semibold text-rose-800 mb-2">
             {product.name}
           </h1>
 
@@ -60,11 +60,12 @@ const ProductDetails = () => {
           )}
 
           {/* Product availability */}
-          <p className="text-green-600 font-medium">
-            In Stock
-          </p>
-        
-          <p className="text-xl text-gray-600 mb-2">${product.price}</p>
+          <div className='flex items-center justify-center gap-6'>
+            <p className="text-3xl font-bold text-rose-800 mb-2">${product.price}</p>
+            <p className="text-green-600 font-medium">
+              In Stock
+            </p>
+          </div>
 
           {/* Product details */}
           <div className='flex flex-col gap-1'>
@@ -80,7 +81,7 @@ const ProductDetails = () => {
             To place an order, please{" "}
             <Link
               to="/contact"
-              className="text-red-800 font-medium hover:underline"
+              className="text-rose-800 font-medium hover:underline"
             >
               contact us
             </Link>.

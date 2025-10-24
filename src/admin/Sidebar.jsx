@@ -9,14 +9,14 @@ const Sidebar = ({ activePage, setActivePage }) => {
   ];
 
   return (
-    <aside className="w-64 bg-red-900 text-white p-4 flex flex-col">
+    <aside className="w-64 bg-rose-900 text-white p-4 flex flex-col">
       <h2 className="text-2xl font-bold mb-6 text-center">Store Admin</h2>
       {menu.map((item) => (
         <button
           key={item.key}
           onClick={() => setActivePage(item.key)}
           className={`text-left px-4 py-2 rounded mb-2 transition-colors duration-300 ${
-            activePage === item.key ? "bg-red-800" : "hover:bg-red-800"
+            activePage === item.key ? "bg-rose-800" : "hover:bg-rose-700"
           }`}
         >
           {item.label}

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-300 bottom-0 h-48 pt-5 shadow">
+    <footer className="bg-black/5 bottom-0 h-48 pt-5 shadow">
         <div className="p-4 mx-auto max-w-screen-xl md:flex md:items-center md:justify-between md:p-6">            
             <span className="text-sm text-gray-700 sm:text-center">&copy;{new Date().getFullYear()} <Link to="/" className="hover:underline">Lichtman's Wine & Liquor Store Inc.</Link> All Rights Reserved.</span>
             <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">

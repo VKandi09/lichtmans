@@ -11,7 +11,7 @@ const Header = () => {
       <h1 className="text-2xl font-bold text-gray-800">Lichtman's Liquor Store</h1>
       <button
         onClick={handleLogout}
-        className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-800"
+        className="bg-rose-800 text-white px-4 py-2 rounded hover:bg-rose-900 cursor-pointer"
       >
         Logout
       </button>

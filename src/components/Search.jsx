@@ -18,7 +18,7 @@ const SearchBox = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex items-center border-gray-300 border-2 rounded-full h-10 w-80 justify-between md:w-48 lg:w-64 focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent"
+      className="flex items-center border-gray-300 border-2 rounded-full h-10 w-80 justify-between md:w-48 lg:w-80 focus-within:ring-2 focus-within:ring-rose-800 focus-within:border-transparent"
     >
       <input
         type="text"
@@ -29,7 +29,7 @@ const SearchBox = () => {
       />
       <button
         type="submit"
-        className="hidden md:inline-block text-gray-700 px-3 py-1 hover:text-red-800 focus:outline-none"
+        className="hidden md:inline-block text-gray-700 px-3 py-1 hover:text-rose-800 focus:outline-none"
       >
         <FiSearch size={20} />
       </button>

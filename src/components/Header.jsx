@@ -13,17 +13,11 @@ const Header = () => {
     {
       title: "Wines",
       path: "/products?type=wine",
-      // links: [
-      //   { name: "Red Wine", path: "/products" },
-      //   { name: "White Wine", path: "/products" },
-      //   { name: "Rosé Wine", path: "/products" },
-      //   { name: "Sparkling Wine", path: "/products" },
-      //   { name: "Dessert Wine", path: "/products" },
-      // ]
     },
     {
       title: "Spirits",
       links: [
+        { name: "Bourbon", path: "/products?subType=bourbon" },
         { name: "Whiskey", path: "/products?type=whiskey" },
         { name: "Vodka", path: "/products?type=vodka" },
         { name: "Tequila", path: "/products?type=tequila" },
@@ -32,15 +26,11 @@ const Header = () => {
     {
       title: "Specials",
       path: "/products/specials",
-      // links: [
-      //   { name: "Wines", path: "/products/specials/wines" },
-      //   { name: "Spirits", path: "/products/specials/" },
-      // ]
     },
-    {
-      title: "All Products",
-      path: "/products",
-    },
+    // {
+    //   title: "All Products",
+    //   path: "/products",
+    // },
     {
       title: "Events",
       path: "/events",
@@ -54,7 +44,7 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 bg-white w-full shadow z-50">
       <div className="max-w-8xl mx-auto flex px-8 py-4 items-center justify-between w-full">
-        <Link to="/" className="text-gray-700 hover:text-red-800 text-base md:text-xl font-bold">
+        <Link to="/" className="text-gray-700 hover:text-rose-800 text-base md:text-xl font-bold">
           <span className="hidden sm:inline">Lichtman's Wine & Liquor Store Inc.</span>
           <span className="sm:hidden">Lichtman's</span>
         </Link>
@@ -70,7 +60,7 @@ const Header = () => {
                   onMouseLeave={() => setDesktopActiveDropdown(null)}
                 >
                   <button
-                      className="text-gray-700 hover:text-red-800 font-medium cursor-pointer"
+                      className="text-gray-700 hover:text-rose-800 font-medium cursor-pointer"
                     >
                     {item.title}
                     </button>
@@ -82,7 +72,7 @@ const Header = () => {
                           <Link
                             key={linkIndex}
                             to={link.path}
-                            className="block px-4 py-2 text-gray-700 hover:text-red-800"
+                            className="block px-4 py-2 text-gray-700 hover:text-rose-800"
                           >
                             {link.name}
                           </Link>
@@ -92,7 +82,7 @@ const Header = () => {
                 </div>
               ) : (
                 <button
-                  className="text-gray-700 hover:text-red-800 font-medium cursor-pointer"
+                  className="text-gray-700 hover:text-rose-800 font-medium cursor-pointer"
                   onClick={() => navigate(item.path)}
                 >
                     {item.title}
@@ -104,22 +94,8 @@ const Header = () => {
         </nav>
         {/* Search box */}
         <SearchBox />
-        {/* <div className="flex items-center border-gray-300 border-2 rounded-xl h-10 w-42 justify-between md:w-48 lg:w-64 focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent ">
-          <input
-            type="text"
-            placeholder="Search for items..."
-            className="hidden md:inline-block px-3 py-1 focus:outline-none"
-          />
-          <button className="hidden md:inline-block text-gray-700 px-3 py-1 hover:text-red-800 focus:outline-none">
-            <FiSearch size={20} />
-          </button>
-        </div> */}
-        {/* <div>
-          <FiUser size={25} className="text-gray-700 hover:text-red-800 cursor-pointer" />
-        </div> */}
-        {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-700 hover:text-red-800 focus:outline-none relative z-[60] flex-shrink-0 cursor-pointer"
+          className="md:hidden text-gray-700 hover:text-rose-800 focus:outline-none relative z-[60] flex-shrink-0 cursor-pointer"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <FiX size={25}/> : <FiMenu size={25} />}
@@ -136,7 +112,7 @@ const Header = () => {
           {menuItems.map((item, index) => (
             <div key={index} className="mb-2">
               <button
-                className="w-full text-left font-medium text-gray-700 hover:text-red-800 flex justify-between items-center py-2 cursor-pointer"
+                className="w-full text-left font-medium text-gray-700 hover:text-rose-800 flex justify-between items-center py-2 cursor-pointer"
                 onClick={() =>
                   setMobileActiveDropdown(mobileActiveDropdown === index ? null : index)
                 }
@@ -152,7 +128,7 @@ const Header = () => {
                     <Link
                       key={linkIndex}
                       to={link.path}
-                      className="block px-2 py-1 text-gray-700 hover:text-red-800 rounded"
+                      className="block px-2 py-1 text-gray-700 hover:text-rose-800 rounded"
                       onClick={() => setIsMobileMenuOpen(false)} // close menu on click
                     >
                       {link.name}

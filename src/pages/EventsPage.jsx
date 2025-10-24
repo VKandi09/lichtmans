@@ -57,7 +57,7 @@ const EventsPage = () => {
               (event) => event.date.toDateString() === date.toDateString()
             );
             return hasEvent ? (
-              <div className="mt-1 w-2 h-2 bg-red-800 rounded-full mx-auto" />
+              <div className="mt-1 w-2 h-2 bg-rose-800 rounded-full mx-auto" />
             ) : null;
           }}
         />

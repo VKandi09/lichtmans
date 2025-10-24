@@ -28,9 +28,9 @@ const Featured = () => {
   }, []);
 
   return (
-    <section className="py-22 bg-gray-50">
+    <section className="py-22 bg-black/5">
       <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
+        <h1 className="text-4xl font-bold text-center text-rose-800 mb-8">
           Featured Products
         </h1>
         <div className="flex justify-center">

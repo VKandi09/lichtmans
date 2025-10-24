@@ -11,7 +11,7 @@ const ProductCard = ({product}) => {
             {name}
           </h2>
           <p className="text-gray-600 mb-2 text-center">$ {price}</p>
-          <button className="w-full bg-red-800 text-white py-2 rounded hover:bg-red-900 transition-colors duration-300 cursor-pointer">
+          <button className="w-full bg-rose-800 text-white py-2 rounded hover:bg-rose-900 transition-colors duration-300 cursor-pointer">
             View Details
           </button>
       </Link>

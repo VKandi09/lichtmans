@@ -1,66 +1,47 @@
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
-const products = [
-  { 
-    id: 1, 
-    name: "Red Wine", 
-    image: "https://www.finewineandgoodspirits.com/ccstore/v1/images/?source=/file/v6521856860642915980/products/000005722_1006780_F1.jpg&height=475&width=475" 
-  },
-  { 
-    id: 2, 
-    name: "Whiskey", 
-    image: "https://hips.hearstapps.com/hmg-prod/images/clausthaler-1563894333.jpg?crop=1xw:1xh;center,top" 
-  },
-  { 
-    id: 3, 
-    name: "Vodka", 
-    image: "https://topshelfwineandspirits.com/cdn/shop/products/Untitled-2copy_a2ef47b4-ead4-4342-96aa-7e3b6615e5aa.jpg?v=1621637524" 
-  },
-  { 
-    id: 4, 
-    name: "Champagne", 
-    image: "https://hips.hearstapps.com/toc.h-cdn.co/assets/16/41/10.jpg?resize=980:*" 
-  },
-  { 
-    id: 5, 
-    name: "Red Wine", 
-    image: "https://www.finewineandgoodspirits.com/ccstore/v1/images/?source=/file/v6521856860642915980/products/000005722_1006780_F1.jpg&height=475&width=475" 
-  },
-  { 
-    id: 6, 
-    name: "Whiskey", 
-    image: "https://hips.hearstapps.com/hmg-prod/images/clausthaler-1563894333.jpg?crop=1xw:1xh;center,top" 
-  },
-  { 
-    id: 7, 
-    name: "Vodka", 
-    image: "https://topshelfwineandspirits.com/cdn/shop/products/Untitled-2copy_a2ef47b4-ead4-4342-96aa-7e3b6615e5aa.jpg?v=1621637524" 
-  },
-  { 
-    id: 8, 
-    name: "Champagne", 
-    image: "https://hips.hearstapps.com/toc.h-cdn.co/assets/16/41/10.jpg?resize=980:*" 
-  },
-];
+import { FaChevronLeft, FaChevronRight, FaChevronRight as FaArrowRight } from "react-icons/fa";
+import ProductCard from "../components/ProductCard";
 
 const BestSellers = () => {
+  const [bourbonProducts, setBourbonProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBourbonProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:5001/api/products?subType=bourbon");
+        if (!res.ok) throw new Error("Failed to fetch bourbon products");
+        const data = await res.json();
+        setBourbonProducts(data);
+      } catch (err) {
+        console.error("Error fetching bourbon products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBourbonProducts();
+  }, []);
+
+  if (loading) return <p className="text-center py-10 text-gray-600">Loading best sellers...</p>;
+
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="py-22 bg-white">
+      <div className="mx-auto max-w-7xl p-2">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl text-gray-700 font-bold">Best Sellers</h1>
+        <h1 className="text-4xl text-center justify-center text-rose-800 font-bold mb-3">Best Sellers</h1>
+        <div className="flex w-full justify-end items-end mb-4">
+          {/* <h1 className="text-4xl text-rose-800 font-bold">Best Sellers</h1> */}
           <a
-            href="/best-sellers"
+            href="/products?subType=bourbon"
             className="flex items-center text-gray-700 hover:text-red-800 transition"
           >
             View All
-            <FaChevronRight className="ml-2" />
+            <FaArrowRight className="ml-2" />
           </a>
         </div>
 
@@ -70,42 +51,39 @@ const BestSellers = () => {
           <button className="swiper-button-prev-custom p-2 border rounded-full hover:text-red-800 text-gray-700">
             <FaChevronLeft />
           </button>
+
           <div className="relative w-full">
-            <Swiper
-              slidesPerView={4}
-              spaceBetween={20}
-              loop={true}
-              autoplay={{ delay: 2500, disableOnInteraction: false }}
-              pagination={{ clickable: true, el: ".custom-pagination", }}
-              navigation={{
-                nextEl: ".swiper-button-next-custom",
-                prevEl: ".swiper-button-prev-custom",
-              }}
-              modules={[Autoplay, Pagination, Navigation]}
-              breakpoints={{
-                320: { slidesPerView: 1 },
-                640: { slidesPerView: 2 },
-                1024: { slidesPerView: 4 },
-              }}
-              className="w-full pb-10"
-            >
-              {products.map((product) => (
-                <SwiperSlide key={product.id}>
-                  <div className="bg-white shadow-md border border-gray-200 rounded-lg overflow-hidden p-4 hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-48 object-contain mb-4"
-                    />
-                    <h2 className="text-lg text-gray-700 font-semibold text-center">
-                      {product.name}
-                    </h2>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            {bourbonProducts.length === 0 ? (
+              <p className="text-gray-600 text-center py-10">No bourbon products available.</p>
+            ) : (
+              <Swiper
+                slidesPerView={4}
+                spaceBetween={20}
+                loop={true}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                pagination={{ clickable: true, el: ".custom-pagination" }}
+                navigation={{
+                  nextEl: ".swiper-button-next-custom",
+                  prevEl: ".swiper-button-prev-custom",
+                }}
+                modules={[Autoplay, Pagination, Navigation]}
+                breakpoints={{
+                  320: { slidesPerView: 1 },
+                  640: { slidesPerView: 2 },
+                  1024: { slidesPerView: 4 },
+                }}
+                className="w-full pb-10"
+              >
+                {bourbonProducts.map((product) => (
+                  <SwiperSlide key={product._id}>
+                    <ProductCard product={product} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
             <div className="custom-pagination flex justify-center mt-4"></div>
           </div>
+
           {/* Right Arrow */}
           <button className="swiper-button-next-custom p-2 border rounded-full hover:text-red-800 text-gray-700">
             <FaChevronRight />

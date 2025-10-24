@@ -13,7 +13,6 @@ const AdminLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === adminUsername && password === adminPassword) {
-      // alert("Login successful!");
       navigate("/admin/dashboard");
       setError("");
     } else {
@@ -27,21 +26,21 @@ const AdminLogin = () => {
           <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
             Admin Login
           </h1>
-          <p className="text-gray-600">Username <span className="text-red-800">*</span></p>
+          <p className="text-gray-600">Username <span className="text-rose-800">*</span></p>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2 mb-4 w-full focus:outline-none focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent"
+            className="border border-gray-300 rounded-lg p-2 mb-4 w-full focus:outline-none focus-within:ring-2 focus-within:ring-rose-800 focus-within:border-transparent"
             placeholder="Enter username"
             required
           />
-          <p className="text-gray-600">Password <span className="text-red-800">*</span></p>
+          <p className="text-gray-600">Password <span className="text-rose-800">*</span></p>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 rounded-lg p-2 mb-4 w-full focus:outline-none focus-within:ring-2 focus-within:ring-red-800 focus-within:border-transparent"
+            className="border border-gray-300 rounded-lg p-2 mb-4 w-full focus:outline-none focus-within:ring-2 focus-within:ring-rose-800 focus-within:border-transparent"
             placeholder="Enter password"
             required
           />
@@ -49,7 +48,7 @@ const AdminLogin = () => {
           <div className="flex flex-col justify-center">
             <button
               type="submit"
-              className="bg-red-800 text-white mb-2 px-4 py-2 rounded-lg cursor-pointer transition-all duration-500 ease-in-out hover:bg-red-900 hover:scale-105 hover:shadow-md w-full mt-2 focus-within:border-transparent"
+              className="bg-rose-800 text-white mb-2 px-4 py-2 rounded-lg cursor-pointer transition-all duration-500 ease-in-out hover:bg-rose-900 hover:scale-105 hover:shadow-md w-full mt-2 focus-within:border-transparent"
             >
               Login
             </button>

@@ -47,7 +47,7 @@ const NewArrivals = () => {
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-8">New Arrivals</h2>
         <Link
           to="/new-products"
-          className="flex items-center text-gray-800 hover:text-red-800 transition"
+          className="flex items-center text-gray-800 hover:text-rose-800 transition"
         >
           View All
           <svg
@@ -72,7 +72,7 @@ const NewArrivals = () => {
             key={product.id}
             className="rounded-lg shadow hover:shadow-lg transition overflow-hidden flex flex-col"
           >
-            <p className="text-red-800 text-sm text-end m-3">New</p>
+            <p className="text-rose-800 text-sm text-end m-3">New</p>
             <img
               src={product.image}
               alt={product.name}
@@ -83,7 +83,7 @@ const NewArrivals = () => {
                 {product.name}
               </h3>
               <p className="text-gray-600 text-sm text-center mt-auto">${product.price}</p>
-              <button onClick={() => handleProductDetails(product)} className="mt-4 w-full text-white bg-red-800 hover:bg-red-700 rounded-lg text-xs py-2 px-4 transition">
+              <button onClick={() => handleProductDetails(product)} className="mt-4 w-full text-white bg-rose-800 hover:bg-rose-700 rounded-lg text-xs py-2 px-4 transition">
                 View Details
               </button>
             </div>

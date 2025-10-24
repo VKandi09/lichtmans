@@ -55,7 +55,7 @@ const AdminEventList = () => {
                 </button>
                 <button
                   onClick={() => handleDelete(event._id)}
-                  className="bg-red-600 text-white px-3 py-1 rounded"
+                  className="bg-rose-600 text-white px-3 py-1 rounded"
                 >
                   Delete
                 </button>
