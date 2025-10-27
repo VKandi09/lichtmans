@@ -87,7 +87,7 @@ const ProductDetails = () => {
           </div>
 
           {/* Contact Link */}
-          <p className="text-gray-600 mt-6 text-sm sm:text-base">
+          <p className="text-gray-600 my-6 text-sm sm:text-base">
             To place an order, please{" "}
             <Link
               to="/contact"

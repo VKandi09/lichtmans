@@ -299,7 +299,7 @@ const ProductsList = () => {
               : `${displayedProducts.length} products found`}
           </p>
           {/* Filter Chips */}
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div className="flex flex-wrap gap-2 justify-center mb-2">
             {Object.entries(appliedFilters).map(([key, values]) =>
               values.map((v) => (
                 <div

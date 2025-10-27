@@ -45,46 +45,48 @@ const EventsPage = () => {
   if (error) return <p className="text-center text-red-600 mt-24">{error}</p>;
 
   return (
-    <div className="items-center max-w-6xl mx-auto mt-10 sm:mt-10 p-4 sm:p-6 gap-6 flex flex-col md:flex-row">
-      <h1 className="text-3xl font-semibold mb-8 text-rose-800">Upcoming Events</h1>
-      {/* Calendar Column */}
-      <div className="md:w-1/3">
-        <Calendar
-          onChange={setSelectedDate}
-          value={selectedDate}
-          className="border rounded-lg"
-          tileClassName={({ date }) => {
-            const hasEvent = events.some(
-              (event) => event.date.toDateString() === date.toDateString()
-            );
-            return hasEvent ? 'has-event' : null;
-          }}
-        />
-      </div>
+    <div className="items-center max-w-6xl mx-auto mt-10 p-4 sm:p-6">
+      <h1 className="text-3xl font-semibold mb-8 text-rose-800 text-center">Upcoming Events</h1>
+      <div className="flex flex-col md:flex-row justify-center items-center md:items-center gap-8">
+        {/* Calendar Column */}
+        <div className="md:w-1/3 flex justify-center">
+          <Calendar
+            onChange={setSelectedDate}
+            value={selectedDate}
+            className="border rounded-lg shadow-lg p-2 w-[300px] md:w-[380px] lg:w-[400px]"
+            tileClassName={({ date }) => {
+              const hasEvent = events.some(
+                (event) => event.date.toDateString() === date.toDateString()
+              );
+              return hasEvent ? 'has-event' : null;
+            }}
+          />
+        </div>
 
-      {/* Event List Column */}
-      <div className="md:w-2/3 flex flex-col gap-4">
-        <h2 className="text-xl font-semibold">
-          Events on {selectedDate.toDateString()}
-        </h2>
+        {/* Event List Column */}
+        <div className="md:w-2/3 flex flex-col gap-4">
+          <h2 className="text-xl font-semibold text-center md:text-left">
+            Events on {selectedDate.toDateString()}
+          </h2>
 
-        {eventsForDate.length === 0 ? (
-          <p>No events on this day.</p>
-        ) : (
-          eventsForDate.map((event, index) => (
-            <div
-              key={index}
-              className="border p-4 rounded-lg shadow hover:shadow-md transition"
-            >
-              <h3 className="font-bold text-lg">{event.title}</h3>
-              <h4 className="text-md">Sponsored by : <span className="font-bold">{event.sponsors}</span></h4>
-              <p className="text-sm text-gray-500">
-                {event.time} | {event.location}
-              </p>
-              <p className="mt-2">{event.details}</p>
-            </div>
-          ))
-        )}
+          {eventsForDate.length === 0 ? (
+            <p className="text-gray-500 text-center md:text-left">No events on this day.</p>
+          ) : (
+            eventsForDate.map((event, index) => (
+              <div
+                key={index}
+                className="border p-4 rounded-lg shadow hover:shadow-md transition bg-white"
+              >
+                <h3 className="font-bold text-lg text-rose-800">{event.title}</h3>
+                <h4 className="text-md">Sponsored by : <span className="font-bold">{event.sponsors}</span></h4>
+                <p className="text-sm text-gray-500">
+                  {event.time} | {event.location}
+                </p>
+                <p className="mt-2">{event.details}</p>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
