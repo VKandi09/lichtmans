@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { FiMenu, FiX, FiChevronDown, FiChevronUp, FiUser, FiSearch } from "react-icons/fi";
+import { FiMenu, FiX, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import SearchBox from "./Search";
 
 const Header = () => {
@@ -43,8 +43,13 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 bg-white w-full shadow z-50">
-      <div className="max-w-8xl mx-auto flex px-8 py-4 items-center justify-between w-full">
+      <div className="max-w-8xl mx-auto flex px-4 sm:px-8 py-4 items-center justify-between w-full">
         <Link to="/" className="text-gray-700 hover:text-rose-800 text-base md:text-xl font-bold">
+          <img
+            src="/images/logo.svg"
+            alt="Lichtman's Logo"
+            className="rounded-md inline h-10 w-auto mr-4"
+          />
           <span className="hidden sm:inline">Lichtman's Wine & Liquor Store Inc.</span>
           <span className="sm:hidden">Lichtman's</span>
         </Link>
@@ -103,38 +108,49 @@ const Header = () => {
       </div>
       {/* Mobile Slide Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-75 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full w-[280px] sm:w-[320px] bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0 pointer-events-auto" : "-translate-x-full pointer-events-none"
         }`}
       >
         <h2 className="py-5 text-center text-md font-bold">Lichtman's Wine & Liquor Store Inc.</h2>
         <div className="p-4">
           {menuItems.map((item, index) => (
-            <div key={index} className="mb-2">
-              <button
-                className="w-full text-left font-medium text-gray-700 hover:text-rose-800 flex justify-between items-center py-2 cursor-pointer"
-                onClick={() =>
-                  setMobileActiveDropdown(mobileActiveDropdown === index ? null : index)
-                }
-              >
-                {item.title}
-                <span>{mobileActiveDropdown === index ? <FiChevronUp /> : <FiChevronDown />}</span>
-              </button>
+            <div key={index} className="mb-4">
+              {item.links ? (
+                <>
+                  <button
+                    className="w-full text-left font-medium text-gray-700 hover:text-rose-800 flex justify-between items-center py-2 cursor-pointer"
+                    onClick={() =>
+                      setMobileActiveDropdown(mobileActiveDropdown === index ? null : index)
+                    }
+                  >
+                    {item.title}
+                    <span>{mobileActiveDropdown === index ? <FiChevronUp /> : <FiChevronDown />}</span>
+                  </button>
 
-              {/* Mobile Submenu */}
-              {mobileActiveDropdown === index && (
-                <div className="pl-4 mt-1">
-                  {item.links.map((link, linkIndex) => (
-                    <Link
-                      key={linkIndex}
-                      to={link.path}
-                      className="block px-2 py-1 text-gray-700 hover:text-rose-800 rounded"
-                      onClick={() => setIsMobileMenuOpen(false)} // close menu on click
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                </div>
+                  {/* Mobile Submenu */}
+                  {mobileActiveDropdown === index && (
+                    <div className="pl-4 mt-1">
+                      {item.links.map((link, linkIndex) => (
+                        <Link
+                          key={linkIndex}
+                          to={link.path}
+                          className="block px-2 py-1 text-gray-700 hover:text-rose-800 rounded"
+                          onClick={() => setIsMobileMenuOpen(false)} // close menu on click
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <button
+                  className="text-gray-700 hover:text-rose-800 font-medium cursor-pointer"
+                  onClick={() => {navigate(item.path), setIsMobileMenuOpen(false)}}
+                >
+                    {item.title}
+                  </button>
               )}
             </div>
           ))}

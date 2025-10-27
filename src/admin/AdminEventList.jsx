@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import EditEvent from "./EditEvent";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 const BASE_URL = "http://localhost:5001/api/events";
 
@@ -49,15 +50,15 @@ const AdminEventList = () => {
               <td className="border p-2">
                 <button
                   onClick={() => setEditingEvent(event)}
-                  className="bg-yellow-400 px-3 py-1 rounded mr-2"
+                  className="hover:bg-gray-400 px-3 py-1 rounded mr-2"
                 >
-                  Edit
+                  <FiEdit />
                 </button>
                 <button
                   onClick={() => handleDelete(event._id)}
-                  className="bg-rose-600 text-white px-3 py-1 rounded"
+                  className="hover:bg-gray-400 px-3 py-1 rounded mr-2"
                 >
-                  Delete
+                  <FiTrash2 />
                 </button>
               </td>
             </tr>

@@ -84,7 +84,7 @@ const ProductList = () => {
             <tr key={p._id} className="text-center hover:bg-gray-50">
               <td className="border p-2">{p.name}</td>
               <td className="border p-2">${p.price}</td>
-              <td className="border p-2">{p.quantity}</td>
+              <td className="border p-2">{p.quantity}ml</td>
               <td className="border p-2">{p.stock}</td>
               <td className="border p-2">
                 <button

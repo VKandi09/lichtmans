@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import ProductCard from '../components/ProductCard';
+import { FiFilter, FiX } from "react-icons/fi";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -26,11 +27,11 @@ const ProductsList = () => {
   const [sortOption, setSortOption] = useState('');
   const [priceRange, setPriceRange] = useState([0, 5000]);
   const [loading, setLoading] = useState(true);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   function capitalizeWords(str) {
     if (!str) return '';
     return str
-      .toLowerCase()
       .split(' ')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
@@ -104,6 +105,115 @@ const ProductsList = () => {
 
   if (loading) return <p className='mt-20 text-center text-gray-600'>Loading products...</p>;
 
+  const FilterContent = () => (
+    <>
+      <h2 className="text-xl font-semibold mb-6">Filter Products</h2>
+
+      {/* Brand Filter */}
+      <div className="mb-6">
+        <h3 className="font-medium mb-2">Brand</h3>
+        <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+          {brands.map((brand, idx) => (
+            <label key={idx} className="flex items-center gap-2 text-gray-700">
+              <input
+                type="checkbox"
+                value={brand.toLowerCase()}
+                checked={selectedBrands.includes(brand.toLowerCase())}
+                onChange={() =>
+                  handleCheckboxChange(
+                    brand.toLowerCase(),
+                    selectedBrands,
+                    setSelectedBrands
+                  )
+                }
+                className="accent-rose-800"
+              />
+              {brand}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Type Filter */}
+      <div className="mb-6">
+        <h3 className="font-medium mb-2">Type</h3>
+        <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+          {types.map((type, idx) => (
+            <label key={idx} className="flex items-center gap-2 text-gray-700">
+              <input
+                type="checkbox"
+                value={type.toLowerCase()}
+                checked={selectedTypes.includes(type.toLowerCase())}
+                onChange={() =>
+                  handleCheckboxChange(
+                    type.toLowerCase(),
+                    selectedTypes,
+                    setSelectedTypes
+                  )
+                }
+                className="accent-rose-800"
+              />
+              {type}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Sub-Type Filter */}
+      <div className="mb-6">
+        <h3 className="font-medium mb-2">Sub-Type</h3>
+        <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+          {subTypes.map((sub, idx) => (
+            <label key={idx} className="flex items-center gap-2 text-gray-700">
+              <input
+                type="checkbox"
+                value={sub.toLowerCase()}
+                checked={selectedSubTypes.includes(sub.toLowerCase())}
+                onChange={() =>
+                  handleCheckboxChange(
+                    sub.toLowerCase(),
+                    selectedSubTypes,
+                    setSelectedSubTypes
+                  )
+                }
+                className="accent-rose-800"
+              />
+              {sub}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Price Range Filter */}
+      <div className="mb-6">
+        <h3 className="font-medium mb-2">Price</h3>
+        <input
+          type="range"
+          min={0}
+          max={5000}
+          value={priceRange[1]}
+          onChange={(e) => setPriceRange([0, Number(e.target.value)])}
+          className="w-full h-2 rounded-lg accent-rose-800 cursor-pointer"
+        />
+        <p className="text-gray-600 mt-1">Up to ${priceRange[1]}</p>
+      </div>
+
+      {/* Sort Option */}
+      <div className="mb-6">
+        <h3 className="font-medium mb-2">Sort By</h3>
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-rose-800 focus:border-transparent focus:outline-none"
+        >
+          <option value="">Default</option>
+          <option value="lowToHigh">Price: Low to High</option>
+          <option value="highToLow">Price: High to Low</option>
+        </select>
+      </div>
+    </>
+  );
+
   return (
     <div className='flex flex-col max-w-8xl mx-auto p-4'>
       <div className='flex flex-col items-center justify-center mt-8 text-center'>          
@@ -122,99 +232,47 @@ const ProductsList = () => {
               : `${displayedProducts.length} products found`}
           </p>
         </div>
-      <div className="flex flex-col lg:flex-row my-10 gap-6">
+        {/* Mobile Filter Button */}
+        <button
+          onClick={() => setIsFilterOpen(true)}
+          className="lg:hidden flex items-center gap-2 bg-rose-800 text-white px-4 py-2 rounded-lg mb-4 hover:bg-rose-900 transition-colors w-fit"
+        >
+          <FiFilter size={20} />
+          Filters
+        </button>
+      <div className="flex flex-col lg:flex-row my-4 lg:my-10 gap-6">
         {/* Sidebar Filter */}
-        <aside className="w-full lg:w-1/4 p-6 border-r border-gray-300 sticky top-20 self-start">
-          <h2 className="text-xl font-semibold mb-6">Filter Products</h2>
-
-          {/* Brand Filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">Brand</h3>
-            <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
-              {brands.map((brand, idx) => (
-                <label key={idx} className="flex items-center gap-2 text-gray-700">
-                  <input
-                    type="checkbox"
-                    value={brand.toLowerCase()}
-                    checked={selectedBrands.includes(brand.toLowerCase())}
-                    onChange={() => handleCheckboxChange(brand.toLowerCase(), selectedBrands, setSelectedBrands)}
-                    className="accent-rose-800"
-                  />
-                  {brand}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Type Filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">Type</h3>
-            <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
-              {types.map((type, idx) => (
-                <label key={idx} className="flex items-center gap-2 text-gray-700">
-                  <input
-                    type="checkbox"
-                    value={type.toLowerCase()}
-                    checked={selectedTypes.includes(type.toLowerCase())}
-                    onChange={() => handleCheckboxChange(type.toLowerCase(), selectedTypes, setSelectedTypes)}
-                    className="accent-rose-800"
-                  />
-                  {type}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Sub-Type Filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">Sub-Type</h3>
-            <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
-              {subTypes.map((sub, idx) => (
-                <label key={idx} className="flex items-center gap-2 text-gray-700">
-                  <input
-                    type="checkbox"
-                    value={sub.toLowerCase()}
-                    checked={selectedSubTypes.includes(sub.toLowerCase())}
-                    onChange={() => handleCheckboxChange(sub.toLowerCase(), selectedSubTypes, setSelectedSubTypes)}
-                    className="accent-rose-800"
-                  />
-                  {sub}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Price Range Filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">Price</h3>
-            <input
-              type="range"
-              min={0}
-              max={5000}
-              value={priceRange[1]}
-              onChange={(e) => setPriceRange([0, Number(e.target.value)])}
-              className="w-full h-2 rounded-lg accent-rose-800 cursor-pointer"
-            />
-            <p className="text-gray-600 mt-1">Up to ${priceRange[1]}</p>
-          </div>
-
-          {/* Sort Option */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">Sort By</h3>
-            <select
-              value={sortOption}
-              onChange={(e) => setSortOption(e.target.value)}
-              className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-rose-800 focus:border-transparent focus:outline-none"
-            >
-              <option value="">Default</option>
-              <option value="lowToHigh">Price: Low to High</option>
-              <option value="highToLow">Price: High to Low</option>
-            </select>
-          </div>
+        <aside className="hidden lg:block w-1/4 p-6 border-r border-gray-300 sticky top-20 self-start">
+          <FilterContent />
         </aside>
-
+        {/* Mobile Filter Overlay */}
+        {isFilterOpen && (
+          <>
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 bg-black/30 z-40 lg:hidden"
+              onClick={() => setIsFilterOpen(false)}
+            />
+            {/* Sliding Filter Panel */}
+            <aside className="fixed top-0 left-0 h-full w-[280px] sm:w-[320px] bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out overflow-y-auto lg:hidden">
+              <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+                <h2 className="text-xl font-semibold">Filters</h2>
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="text-gray-700 hover:text-rose-800 p-1"
+                  aria-label="Close filters"
+                >
+                  <FiX size={24} />
+                </button>
+              </div>
+              <div className="p-6">
+                <FilterContent />
+              </div>
+            </aside>
+            </>
+        )}
         {/* Products Grid */}
-        <div className="flex flex-col w-full px-2 lg:px-4">
+        <div className="items-center justify-center flex flex-col w-full px-2 lg:px-4">
           {/* <div className='items-center justify-center mb-6'>          
             <h1 className="text-2xl font-bold mb-4">
               {subTypeFilter
@@ -232,7 +290,7 @@ const ProductsList = () => {
             </p>
           </div> */}
 
-          <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {displayedProducts.length === 0 ? (
               <p className="text-gray-600 col-span-full text-center">
                 No products found.

@@ -17,19 +17,19 @@ const Hero = () => {
   ];
 
   return (
-    <section className="h-auto bg-fixed bg-center bg-cover flex flex-col justify-center items-center text-white py-10">
+    <section className="h-auto bg-fixed bg-center bg-cover flex flex-col justify-center items-center text-white py-6 md:py-10">
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="bg-white p-10 text-center w-full"
+        className="bg-white p-2 sm:p-6 md:p-2 lg:p-2 text-center w-full"
       >
         {/* Image Swiper Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="w-full md:w-3/4 mx-auto mb-5"
+          className="w-full lg:w-3/4 mx-auto mb-5"
         >
           <Swiper
             modules={[Autoplay, Pagination]}
@@ -38,20 +38,20 @@ const Hero = () => {
             loop={true}
             autoplay={{ delay: 5500, disableOnInteraction: false }}
             pagination={{ clickable: true, el: ".custom-pagination", }}
-            className="w-full pb-10"
+            className="flex transition-transform duration-500 ease-in-out"
           >
             {images.map((img, index) => (
               <SwiperSlide key={index}>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="cursor-pointer"
+                  className="min-w-full cursor-pointer"
                   onClick={() => navigate(img.path)}
                 >
                   <img
                     src={img.src}
                     alt={img.path}
-                    className="w-full h-[400px] object-contain shadow-md hover:shadow-xl transition-shadow"
+                    className="w-full h-[150px] sm:h-[300px] md:h-[350px] lg:h-[400px] object-contain hover:scale-105 transition-transform duration-300"
                   />
                 </motion.div>
               </SwiperSlide>
@@ -61,7 +61,7 @@ const Hero = () => {
         <div className="custom-pagination flex justify-center mb-6"></div>
         {/* Title */}
         <motion.h1
-          className="text-5xl text-rose-900 font-bold mb-10 mt-20"
+          className="text-3xl sm:text-4xl md:text-5xl text-rose-900 font-bold mb-6 md:mb-10 mt-10 md:mt-20 px-4"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
@@ -71,7 +71,7 @@ const Hero = () => {
 
         {/* Description */}
         <motion.p
-          className="text-lg text-gray-700 leading-relaxed mb-10 w-3/4 mx-auto"
+          className="text-base sm:text-lg text-gray-700 leading-relaxed mb-6 md:mb-10 w-full sm:w-11/12 md:w-3/4 mx-auto px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 1 }}

@@ -3,7 +3,7 @@ const Sidebar = ({ activePage, setActivePage }) => {
     { key: "dashboard", label: "Dashboard" },
     { key: "view-products", label: "View All Products" },
     { key: "add-product", label: "Add New Product" },
-    { key: "update-contact", label: "Update Contact Details" },
+    // { key: "update-contact", label: "Update Contact Details" },
     { key: "view-events", label: "View Events" },
     { key: "add-event", label: "Add New Event" },
   ];

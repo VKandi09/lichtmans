@@ -11,13 +11,29 @@ const BestSellers = () => {
   const [bourbonProducts, setBourbonProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+    const capitalizeFirstChar = (str) => {
+    if (!str) return str;
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   useEffect(() => {
     const fetchBourbonProducts = async () => {
       try {
         const res = await fetch("http://localhost:5001/api/products?subType=bourbon");
         if (!res.ok) throw new Error("Failed to fetch bourbon products");
         const data = await res.json();
-        setBourbonProducts(data);
+
+        const formattedData = data.map((product) => ({
+          ...product,
+          name: capitalizeFirstChar(product.name),
+          type: capitalizeFirstChar(product.type),
+          brand: capitalizeFirstChar(product.brand),
+          subType: capitalizeFirstChar(product.subType),
+        }))
+        setBourbonProducts(formattedData);
       } catch (err) {
         console.error("Error fetching bourbon products:", err);
       } finally {

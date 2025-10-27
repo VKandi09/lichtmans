@@ -15,7 +15,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between">
+    <div className="relative min-h-screen flex flex-col justify-between overflow-x-hidden">
       <main
         className={`flex-1 transition-all duration-500 ${
           !ageVerified ? "pointer-events-none select-none blur-sm" : ""

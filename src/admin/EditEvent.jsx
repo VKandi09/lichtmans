@@ -40,7 +40,7 @@ const EditEvent = ({ event, onClose, refresh }) => {
       <div className="bg-white p-6 rounded shadow-lg w-96">
         <h2 className="text-lg font-semibold mb-4">Edit Event</h2>
         <form onSubmit={handleUpdate} className="space-y-3">
-          <input name="title" value={form.title} onChange={handleChange} className="border p-2 w-full rounded" />
+          <input name="title" value={form.title} onChange={handleChange} className="border p-2 w-full rounded"/>
           <input name="sponsors" value={form.sponsors} onChange={handleChange} className="border p-2 w-full rounded" />
           <input type="date" name="date" value={form.date} onChange={handleChange} className="border p-2 w-full rounded" />
           <input name="time" value={form.time} onChange={handleChange} className="border p-2 w-full rounded" />

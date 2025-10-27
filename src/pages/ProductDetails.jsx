@@ -9,7 +9,7 @@ const ProductDetails = () => {
 
   if (!product) {
     return (
-      <div className="flex justify-center items-center h-screen w-full">
+      <div className="flex flex-col justify-center items-center h-screen px-4 text-center">
         <p className="text-lg text-gray-700 p-4 items-center">Product not found.</p>
         <Link to="/products" className="text-blue-500 hover:underline ml-2">
           Go back to Products
@@ -19,20 +19,20 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-8">
+    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-10 py-10">
       {/* Back button */}
       <Link
         to="/products"
-        className="flex gap-2 items-center text-gray-700 hover:text-rose-800 absolute top-8 left-8"
+        className="flex gap-2 items-center text-gray-700 hover:text-rose-800 absolute top-6 left-4 sm:top-8 sm:left-8"
       >
         <FiChevronLeft /> Back to Products
       </Link>
 
       {/* Product Content */}
-      <div className="flex items-center h-screen w-full top-3">
+      <div className="flex flex-col md:flex-row items-center justify-center mt-6 gap-10 md:gap-16 lg:gap-24 w-full max-w-6xl">
         {/* Product Image */}
         <div
-          className="flex flex-col justify-self-start items-start p-8 mx-20 border border-gray-200 rounded-lg shadow cursor-zoom-in hover:scale-[1.02] transition-transform duration-300"
+          className="flex justify-center items-center w-full lg:w-[450px] lg:h-[650px] p-2 border border-gray-200 rounded-lg shadow cursor-zoom-in hover:scale-[1.02] transition-transform duration-300"
           onClick={() => setIsModalOpen(true)}
         >
           <img
@@ -42,34 +42,39 @@ const ProductDetails = () => {
                 : "/images/placeholder-bottle.png"
             }
             alt={product.name}
-            className="w-100 h-150 object-contain"
+            className="rounded-md
+              w-[250px] h-[350px]
+              sm:w-[280px] sm:h-[380px]
+              md:w-[300px] md:h-[400px]
+              lg:w-[320px] lg:h-[420px]
+              xl:w-[350px] xl:h-[450px] object-contain"
           />
         </div>
 
         {/* Product Info */}
         <div className="flex flex-col items-start justify-start w-full lg:w-1/2 gap-5">
-          <h1 className="text-3xl font-semibold text-rose-800 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-rose-800">
             {product.name}
           </h1>
 
           {/* Description */}
           {product.description && (
-            <p className="text-gray-700 leading-relaxed mb-2">
+            <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
               {product.description}
             </p>
           )}
 
           {/* Product availability */}
-          <div className='flex items-center justify-center gap-6'>
-            <p className="text-3xl font-bold text-rose-800 mb-2">${product.price}</p>
+          <div className='flex flex-col sm:flex-row sm:items-center gap-3'>
+            <p className="text-2xl sm:text-3xl font-bold text-rose-800">${product.price}</p>
             <p className="text-green-600 font-medium">
               In Stock
             </p>
           </div>
 
           {/* Product details */}
-          <div className='flex flex-col gap-1'>
-            <p className="text-xl font-semibold text-gray-600">Product details</p>
+          <div className='flex flex-col gap-1 mt-4'>
+            <p className="text-xl font-semibold text-gray-700">Product details</p>
             <p className="text-sm italic text-gray-600">Brand : <span className='font-semibold italic'>{product.brand}</span></p>
             <p className="text-sm italic text-gray-600">Type of product : <span className='font-semibold italic'>{product.type}</span></p>
             { product.subType ? <p className="text-sm italic text-gray-600">Style : <span className='font-semibold italic'>{product.subType}</span></p> : null }
@@ -77,7 +82,7 @@ const ProductDetails = () => {
           </div>
 
           {/* Contact Link */}
-          <p className="text-gray-600 mt-4">
+          <p className="text-gray-600 mt-6 text-sm sm:text-base">
             To place an order, please{" "}
             <Link
               to="/contact"
@@ -91,12 +96,12 @@ const ProductDetails = () => {
 
       {/* Image Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex justify-center items-center z-50 p-4">
           <div className="relative">
             {/* Close button */}
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute -top-8 -right-8 bg-white text-black rounded-full p-2 hover:bg-gray-200 transition"
+              className="absolute -top-10 right-0 bg-white text-black rounded-full p-2 hover:bg-gray-200 transition"
             >
               <FiX size={20} />
             </button>
