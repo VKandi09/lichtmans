@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
-import { FiChevronLeft, FiX } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiHome, FiX } from "react-icons/fi";
 import { useState } from 'react';
 
 const ProductDetails = () => {
@@ -19,14 +19,19 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-10 py-10">
-      {/* Back button */}
-      <Link
-        to="/products"
-        className="flex gap-2 items-center text-gray-700 hover:text-rose-800 absolute top-6 left-4 sm:top-8 sm:left-8"
-      >
-        <FiChevronLeft /> Back to Products
-      </Link>
+    <div className="relative min-h-screen flex flex-col justify-start items-center px-4 sm:px-6 lg:px-10 pt-10 sm:pt-10 lg:pt-10">
+      {/* Breadcrumbs */}
+      <nav className="flex items-center text-sm text-gray-500 self-start mb-2">
+        <Link to="/" className="flex items-center hover:text-rose-800">
+          <FiHome className="mr-1" /> Home
+        </Link>
+        <FiChevronRight className="mx-2" />
+        <Link to="/products" className="hover:text-rose-800">Products</Link>
+        <FiChevronRight className="mx-2" />
+        <span className="text-rose-800 font-medium truncate max-w-[160px] sm:max-w-none">
+          {product.name}
+        </span>
+      </nav>
 
       {/* Product Content */}
       <div className="flex flex-col md:flex-row items-center justify-center mt-6 gap-10 md:gap-16 lg:gap-24 w-full max-w-6xl">

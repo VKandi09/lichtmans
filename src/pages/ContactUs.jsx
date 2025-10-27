@@ -18,7 +18,7 @@ const ContactUs = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center max-h-screen p-15">
+    <div className="flex flex-col items-center max-h-screen p-4 sm:p-6 mt-10 sm:mt-10">
       <h1 className="text-3xl font-semibold mb-8 text-rose-800">Contact Us</h1>
       {contact ? (
         <div className="bg-white border border-gray-300 shadow rounded-2xl p-8 w-full max-w-3xl space-y-6 hover:shadow-lg transition-shadow duration-300">

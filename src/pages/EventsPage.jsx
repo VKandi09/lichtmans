@@ -45,20 +45,19 @@ const EventsPage = () => {
   if (error) return <p className="text-center text-red-600 mt-24">{error}</p>;
 
   return (
-    <div className="max-w-6xl mx-auto mt-24 p-4 flex flex-col md:flex-row gap-6">
+    <div className="items-center max-w-6xl mx-auto mt-10 sm:mt-10 p-4 sm:p-6 gap-6 flex flex-col md:flex-row">
+      <h1 className="text-3xl font-semibold mb-8 text-rose-800">Upcoming Events</h1>
       {/* Calendar Column */}
       <div className="md:w-1/3">
         <Calendar
           onChange={setSelectedDate}
           value={selectedDate}
           className="border rounded-lg"
-          tileContent={({ date }) => {
+          tileClassName={({ date }) => {
             const hasEvent = events.some(
               (event) => event.date.toDateString() === date.toDateString()
             );
-            return hasEvent ? (
-              <div className="mt-1 w-2 h-2 bg-rose-800 rounded-full mx-auto" />
-            ) : null;
+            return hasEvent ? 'has-event' : null;
           }}
         />
       </div>

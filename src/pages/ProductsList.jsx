@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import ProductCard from '../components/ProductCard';
-import { FiFilter, FiX } from "react-icons/fi";
+import { FiFilter, FiX, FiChevronRight, FiHome } from "react-icons/fi";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -23,6 +23,11 @@ const ProductsList = () => {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedSubTypes, setSelectedSubTypes] = useState([]);
+  const [appliedFilters, setAppliedFilters] = useState({
+    brands: [],
+    types: [],
+    subTypes: [],
+  });
 
   const [sortOption, setSortOption] = useState('');
   const [priceRange, setPriceRange] = useState([0, 5000]);
@@ -85,12 +90,35 @@ const ProductsList = () => {
       setSelectedList([...selectedList, value]);
     }
   };
+  // Apply filters manually
+  const applyFilters = () => {
+    setAppliedFilters({
+      brands: selectedBrands,
+      types: selectedTypes,
+      subTypes: selectedSubTypes,
+    });
+    setIsFilterOpen(false);
+  };
 
-  // Apply filters dynamically
-  let displayedProducts = filteredProducts.filter((product) => {
-    if (selectedBrands.length && !selectedBrands.includes(product.brand.toLowerCase())) return false;
-    if (selectedTypes.length && !selectedTypes.includes(product.type.toLowerCase())) return false;
-    if (selectedSubTypes.length && !selectedSubTypes.includes(product.subType.toLowerCase())) return false;
+  // Reset filters
+  const resetFilters = () => {
+    setSelectedBrands([]);
+    setSelectedTypes([]);
+    setSelectedSubTypes([]);
+    setAppliedFilters({
+      brands: [],
+      types: [],
+      subTypes: [],
+    });
+    setPriceRange([0, 5000]);
+    setSortOption('');
+  };
+
+  // Displayed products after filters
+  let displayedProducts = filteredProducts.filter(product => {
+    if (appliedFilters.brands.length && !appliedFilters.brands.includes(product.brand.toLowerCase())) return false;
+    if (appliedFilters.types.length && !appliedFilters.types.includes(product.type.toLowerCase())) return false;
+    if (appliedFilters.subTypes.length && !appliedFilters.subTypes.includes(product.subType.toLowerCase())) return false;
     if (product.price < priceRange[0] || product.price > priceRange[1]) return false;
     if (searchTerm && !product.name.toLowerCase().includes(searchTerm)) return false;
     return true;
@@ -104,6 +132,22 @@ const ProductsList = () => {
   }
 
   if (loading) return <p className='mt-20 text-center text-gray-600'>Loading products...</p>;
+
+  // Remove chip
+  const removeChip = (filterType, value) => {
+    const updated = { ...appliedFilters };
+    updated[filterType] = updated[filterType].filter(v => v !== value);
+    setAppliedFilters(updated);
+
+    // Update corresponding selected states
+    if (filterType === "brands") {
+      setSelectedBrands(prev => prev.filter(v => v !== value));
+    } else if (filterType === "types") {
+      setSelectedTypes(prev => prev.filter(v => v !== value));
+    } else if (filterType === "subTypes") {
+      setSelectedSubTypes(prev => prev.filter(v => v !== value));
+    }
+  };
 
   const FilterContent = () => (
     <>
@@ -126,7 +170,7 @@ const ProductsList = () => {
                     setSelectedBrands
                   )
                 }
-                className="accent-rose-800"
+                className="accent-rose-800 cursor-pointer"
               />
               {brand}
             </label>
@@ -151,7 +195,7 @@ const ProductsList = () => {
                     setSelectedTypes
                   )
                 }
-                className="accent-rose-800"
+                className="accent-rose-800 cursor-pointer"
               />
               {type}
             </label>
@@ -176,7 +220,7 @@ const ProductsList = () => {
                     setSelectedSubTypes
                   )
                 }
-                className="accent-rose-800"
+                className="accent-rose-800 cursor-pointer"
               />
               {sub}
             </label>
@@ -204,19 +248,42 @@ const ProductsList = () => {
         <select
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
-          className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-rose-800 focus:border-transparent focus:outline-none"
+          className="w-full border border-gray-300 rounded p-2 focus:ring-2 focus:ring-rose-800 focus:border-transparent focus:outline-none cursor-pointer"
         >
           <option value="">Default</option>
           <option value="lowToHigh">Price: Low to High</option>
           <option value="highToLow">Price: High to Low</option>
         </select>
       </div>
+      {/* Buttons */}
+      <div className="flex gap-3 mt-8">
+        <button
+          onClick={applyFilters}
+          className="flex-1 bg-rose-800 text-white py-2 rounded-lg hover:bg-rose-900 transition cursor-pointer"
+        >
+          Apply Filters
+        </button>
+        <button
+          onClick={resetFilters}
+          className="flex-1 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+        >
+          Reset
+        </button>
+      </div>
     </>
   );
 
   return (
     <div className='flex flex-col max-w-8xl mx-auto p-4'>
-      <div className='flex flex-col items-center justify-center mt-8 text-center'>          
+      {/* Breadcrumbs */}
+      <nav className="flex items-center text-sm text-gray-500 mb-2 sm:mb-4 mt-4">
+        <Link to="/" className="flex items-center hover:text-rose-800">
+          <FiHome className="mr-1" /> Home
+        </Link>
+        <FiChevronRight className="mx-2" />
+        <span className="text-rose-800 font-medium">Products</span>
+      </nav>
+      <div className='flex flex-col items-center justify-center mt-3 lg:mt-2 text-center'>          
           <h1 className="text-2xl font-bold mb-4">
             {subTypeFilter
               ? `${capitalizeWords(subTypeFilter)}`
@@ -231,7 +298,27 @@ const ProductsList = () => {
               ? `${displayedProducts.length} product found`
               : `${displayedProducts.length} products found`}
           </p>
+          {/* Filter Chips */}
+          <div className="flex flex-wrap gap-2 justify-center">
+            {Object.entries(appliedFilters).map(([key, values]) =>
+              values.map((v) => (
+                <div
+                  key={`${key}-${v}`}
+                  className="flex items-center bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm"
+                >
+                  {capitalizeWords(v)}
+                  <button
+                    onClick={() => removeChip(key, v)}
+                    className="ml-2 text-gray-800 hover:bg-gray-400 hover:rounded-full p-1 cursor-pointer"
+                  >
+                    <FiX size={14} />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
         </div>
+
         {/* Mobile Filter Button */}
         <button
           onClick={() => setIsFilterOpen(true)}
@@ -272,7 +359,7 @@ const ProductsList = () => {
             </>
         )}
         {/* Products Grid */}
-        <div className="items-center justify-center flex flex-col w-full px-2 lg:px-4">
+        <div className="items-center flex flex-col w-full px-2 lg:px-4">
           {/* <div className='items-center justify-center mb-6'>          
             <h1 className="text-2xl font-bold mb-4">
               {subTypeFilter
