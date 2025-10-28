@@ -6,6 +6,7 @@ const Featured = () => {
   const [featured, setFeatured] = useState([]);
 
   function capitalizeWords(str) {
+    if (!str) return '';
     return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
@@ -16,7 +17,9 @@ const Featured = () => {
         if (!response.ok) throw new Error("Failed to fetch featured products");
         const data = await response.json();
         // Capitalize the type field
-        const formatted = data.map(item => ({
+        const formatted = data
+          .filter(item => item.type != null)  // Remove items without type
+          .map(item => ({
           ...item,
           type: capitalizeWords(item.type)
         }));
