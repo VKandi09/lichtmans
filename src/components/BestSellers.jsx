@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { FaChevronLeft, FaChevronRight, FaChevronRight as FaArrowRight } from "react-icons/fa";
 import ProductCard from "../components/ProductCard";
+import { API_BASE } from '../api';
 
 const BestSellers = () => {
   const [bourbonProducts, setBourbonProducts] = useState([]);
@@ -22,7 +23,7 @@ const BestSellers = () => {
   useEffect(() => {
     const fetchBourbonProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/products?subType=bourbon");
+        const res = await fetch(`${API_BASE}/api/products?subType=bourbon`);
         if (!res.ok) throw new Error("Failed to fetch bourbon products");
         const data = await res.json();
 

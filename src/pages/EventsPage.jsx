@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { API_BASE } from '../api';
 
-const BASE_URL = "http://localhost:5001/api/events";
+const BASE_URL = `${API_BASE}/api/events`;
 
 const EventsPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());

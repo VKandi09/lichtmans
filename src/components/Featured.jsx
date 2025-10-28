@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE } from "../api";
 
 const Featured = () => {
   const [featured, setFeatured] = useState([]);
@@ -11,7 +12,7 @@ const Featured = () => {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/products/featured");
+        const response = await fetch(`${API_BASE}/api/products/featured`);
         if (!response.ok) throw new Error("Failed to fetch featured products");
         const data = await response.json();
         // Capitalize the type field

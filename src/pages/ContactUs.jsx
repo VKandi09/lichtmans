@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
+import { API_BASE } from '../api';
 
 const ContactUs = () => {
   const [contact, setContact] = useState(null);
@@ -7,7 +8,7 @@ const ContactUs = () => {
   useEffect(() => {
     const fetchContact = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/contact");
+        const res = await fetch(`${API_BASE}/api/contact`);
         const data = await res.json();
         setContact(data);
       } catch (err) {

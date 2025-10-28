@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link } from "react-router-dom";
 import ProductCard from '../components/ProductCard';
 import { FiFilter, FiX, FiChevronRight, FiHome } from "react-icons/fi";
+import { API_BASE } from '../api';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -46,9 +47,9 @@ const ProductsList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let url = "http://localhost:5001/api/products";
+        let url = `${API_BASE}/api/products`;
         if (location.pathname === "/products/specials") {
-          url = "http://localhost:5001/api/products/specials";
+          url = `${API_BASE}/api/products/specials`;
         } else if (typeFilter) {
           url += `?type=${typeFilter}`;
         } else if (subTypeFilter) {
