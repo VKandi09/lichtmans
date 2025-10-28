@@ -46,11 +46,11 @@ const BestSellers = () => {
   if (loading) return <p className="text-center py-10 text-gray-600">Loading best sellers...</p>;
 
   return (
-    <section className="py-22 bg-white">
-      <div className="mx-auto max-w-7xl p-2">
+    <section className="py-15 bg-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <h1 className="text-4xl text-center justify-center text-rose-800 font-bold mb-3">Best Sellers</h1>
-        <div className="flex w-full justify-end items-end mb-4">
+        <h1 className="text-3xl sm:text-4xl text-center justify-center text-rose-900 font-bold mb-3">Best Sellers</h1>
+        <div className="flex w-full justify-center items-center sm:justify-end mb-2">
           {/* <h1 className="text-4xl text-rose-800 font-bold">Best Sellers</h1> */}
           <a
             href="/products?subType=bourbon"
@@ -62,9 +62,9 @@ const BestSellers = () => {
         </div>
 
         {/* Arrows + Swiper */}
-        <div className="flex items-center gap-4">
+        <div className="relative">
           {/* Left Arrow */}
-          <button className="swiper-button-prev-custom p-2 border rounded-full hover:text-red-800 text-gray-700">
+          <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border rounded-full shadow hover:text-red-800 text-gray-700 hidden sm:flex">
             <FaChevronLeft />
           </button>
 
@@ -73,8 +73,9 @@ const BestSellers = () => {
               <p className="text-gray-600 text-center py-10">No bourbon products available.</p>
             ) : (
               <Swiper
-                slidesPerView={4}
-                spaceBetween={20}
+                slidesPerView={1.1}
+                centeredSlides={true}
+                spaceBetween={16}
                 loop={true}
                 autoplay={{ delay: 3000, disableOnInteraction: false }}
                 pagination={{ clickable: true, el: ".custom-pagination" }}
@@ -85,8 +86,10 @@ const BestSellers = () => {
                 modules={[Autoplay, Pagination, Navigation]}
                 breakpoints={{
                   320: { slidesPerView: 1 },
-                  640: { slidesPerView: 2 },
-                  1024: { slidesPerView: 4 },
+                  480: { slidesPerView: 3, centeredSlides: true },
+                  640: { slidesPerView: 3, centeredSlides: false },
+                  768: { slidesPerView: 3, centeredSlides: false },
+                  1024: { slidesPerView: 4, centeredSlides: false },
                 }}
                 className="w-full pb-10"
               >
@@ -97,13 +100,12 @@ const BestSellers = () => {
                 ))}
               </Swiper>
             )}
+            {/* Right Arrow */}
+            <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border rounded-full shadow hover:text-red-800 text-gray-700 hidden sm:flex">
+              <FaChevronRight />
+            </button>
             <div className="custom-pagination flex justify-center mt-4"></div>
           </div>
-
-          {/* Right Arrow */}
-          <button className="swiper-button-next-custom p-2 border rounded-full hover:text-red-800 text-gray-700">
-            <FaChevronRight />
-          </button>
         </div>
       </div>
     </section>
