@@ -22,18 +22,18 @@ const Hero = () => {
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="bg-white p-2 sm:p-6 md:p-2 lg:p-2 text-center w-full"
+        className="bg-white p-2 text-center w-full" //p-2 sm:p-6 md:p-2 
       >
         {/* Image Swiper Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="w-full lg:w-3/4 mx-auto mb-5"
+          className="w-full mb-2 md:mb-4 lg:mb-5" //lg:w-3/4 mx-auto mb-5
         >
           <Swiper
             modules={[Autoplay, Pagination]}
-            spaceBetween={30}
+            spaceBetween={0} //30
             slidesPerView={1}
             loop={true}
             autoplay={{ delay: 5500, disableOnInteraction: false }}
@@ -51,7 +51,7 @@ const Hero = () => {
                   <img
                     src={img.src}
                     alt={img.path}
-                    className="w-full h-[150px] sm:h-[300px] md:h-[350px] lg:h-[400px] object-contain hover:scale-105 transition-transform duration-300"
+                    className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[500px] object-contain hover:scale-105 transition-transform duration-300"
                   />
                 </motion.div>
               </SwiperSlide>

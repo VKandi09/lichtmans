@@ -10,8 +10,9 @@
 
 .swiper-button-prev,
 .swiper-button-next {
-  color: #b91c1c !important; /* text-red-700 */
-  transition: transform 0.3s ease;
+  /*color: #b91c1c !important; /* text-red-700 */
+  /*transition: transform 0.3s ease;*/
+  display: none !important; /* Hide navigation buttons */
 }
 
 .swiper-button-prev:hover,

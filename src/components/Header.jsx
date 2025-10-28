@@ -48,10 +48,10 @@ const Header = () => {
           <img
             src="/images/logo.svg"
             alt="Lichtman's Logo"
-            className="rounded-md inline h-10 w-auto mr-4"
+            className="rounded-md inline h-10 w-auto md:mr-4"
           />
           <span className="hidden sm:inline">Lichtman's Wine & Liquor Store Inc.</span>
-          <span className="sm:hidden">Lichtman's</span>
+          {/* <span className="sm:hidden">Lichtman's</span> */}
         </Link>
         <nav className="hidden md:flex items-start gap-8 relative">
           {menuItems.map((item, index) => (

@@ -1,33 +1,3 @@
-// const Sidebar = ({ activePage, setActivePage }) => {
-//   const menu = [
-//     { key: "dashboard", label: "Dashboard" },
-//     { key: "view-products", label: "View All Products" },
-//     { key: "add-product", label: "Add New Product" },
-//     // { key: "update-contact", label: "Update Contact Details" },
-//     { key: "view-events", label: "View Events" },
-//     { key: "add-event", label: "Add New Event" },
-//   ];
-
-//   return (
-//     <aside className="w-64 bg-rose-900 text-white p-4 flex flex-col">
-//       <h2 className="text-2xl font-bold mb-6 text-center">Store Admin</h2>
-//       {menu.map((item) => (
-//         <button
-//           key={item.key}
-//           onClick={() => setActivePage(item.key)}
-//           className={`text-left px-4 py-2 rounded mb-2 transition-colors duration-300 ${
-//             activePage === item.key ? "bg-rose-800" : "hover:bg-rose-700"
-//           }`}
-//         >
-//           {item.label}
-//         </button>
-//       ))}
-//     </aside>
-//   );
-// };
-
-// export default Sidebar;
-
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
@@ -44,7 +14,7 @@ const Sidebar = ({ activePage, setActivePage }) => {
 
   const handleMenuClick = (key) => {
     setActivePage(key);
-    setIsMobileMenuOpen(false); // Close mobile menu after selection
+    setIsMobileMenuOpen(false);
   };
 
   const SidebarContent = () => (
@@ -71,7 +41,7 @@ const Sidebar = ({ activePage, setActivePage }) => {
       {/* Mobile Menu Toggle Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-40 bg-rose-900 text-white p-3 rounded-lg shadow-lg hover:bg-rose-800 transition-colors"
+        className="lg:hidden fixed top-2 left-4 z-40 text-gray-700 hover:text-white hover:rounded-lg p-3 hover:bg-rose-800 transition-colors"
         aria-label="Open menu"
       >
         <FiMenu size={24} />
