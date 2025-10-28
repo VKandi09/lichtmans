@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FiX } from "react-icons/fi";
+import { API_BASE } from '../api';
 
 
-const BASE_URL = "http://localhost:5001/api/products";
+const BASE_URL = `${API_BASE}/api/products`;
 
 const EditProduct = ({ product, onClose, refresh }) => {
   const [updatedProduct, setUpdatedProduct] = useState(product);

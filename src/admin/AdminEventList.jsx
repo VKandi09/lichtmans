@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import EditEvent from "./EditEvent";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { API_BASE } from '../api';
 
-const BASE_URL = "http://localhost:5001/api/events";
+const BASE_URL = `${API_BASE}/api/events`;
 
 const AdminEventList = () => {
   const [events, setEvents] = useState([]);
