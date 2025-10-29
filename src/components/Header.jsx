@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FiMenu, FiX, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import SearchBox from "./Search";
 
@@ -8,6 +8,7 @@ const Header = () => {
   const [desktopActiveDropdown, setDesktopActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
+  const dropdownRef = useRef(null);
 
   const menuItems = [
     {
@@ -27,10 +28,6 @@ const Header = () => {
       title: "Specials",
       path: "/products/specials",
     },
-    // {
-    //   title: "All Products",
-    //   path: "/products",
-    // },
     {
       title: "Events",
       path: "/events",
@@ -40,6 +37,28 @@ const Header = () => {
       path: "/contact",
     },
   ];
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDesktopActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Toggle dropdown on click
+  const toggleDropdown = (index) => {
+    setDesktopActiveDropdown(desktopActiveDropdown === index ? null : index);
+  };
+
+  // Close dropdown when link is clicked
+  const handleDropdownLinkClick = () => {
+    setDesktopActiveDropdown(null);
+  };
 
   return (
     <header className="fixed top-0 left-0 bg-white w-full shadow z-50">
@@ -51,49 +70,51 @@ const Header = () => {
             className="rounded-md inline h-10 w-auto md:mr-4"
           />
           <span className="hidden sm:inline">Lichtman's Wine & Liquor Store Inc.</span>
-          {/* <span className="sm:hidden">Lichtman's</span> */}
         </Link>
         <nav className="hidden md:flex items-start gap-8 relative">
           {menuItems.map((item, index) => (
             <div
               key={index}
               className="group relative"
+              ref={item.links ? dropdownRef : null}
             >
               { item.links ? (
-                <div 
-                  onMouseEnter={() => setDesktopActiveDropdown(index)}
-                  onMouseLeave={() => setDesktopActiveDropdown(null)}
-                >
+                <div>
                   <button
-                      className="text-gray-700 hover:text-rose-800 font-medium cursor-pointer"
-                    >
+                    className="text-gray-700 hover:text-rose-800 font-medium cursor-pointer flex items-center gap-1"
+                    onClick={() => toggleDropdown(index)}
+                  >
                     {item.title}
-                    </button>
-                    {/* Dropdown */}
-                    {desktopActiveDropdown === index && (
-                      <div
-                        className='absolute top-4 left-0 bg-white shadow-lg rounded-lg mt-2 py-2 w-52 outline-1 outline-gray-200'>
-                        {item.links.map((link, linkIndex) => (
-                          <Link
-                            key={linkIndex}
-                            to={link.path}
-                            className="block px-4 py-2 text-gray-700 hover:text-rose-800"
-                          >
-                            {link.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
+                    <FiChevronDown 
+                      className={`text-md transition-transform duration-200 ${
+                        desktopActiveDropdown === index ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  {/* Dropdown */}
+                  {desktopActiveDropdown === index && (
+                    <div className='absolute top-full left-0 bg-white shadow-md border border-gray-100 rounded mt-1 py-1 w-48 z-50'>
+                      {item.links.map((link, linkIndex) => (
+                        <Link
+                          key={linkIndex}
+                          to={link.path}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-rose-800 transition-colors"
+                          onClick={handleDropdownLinkClick}
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <button
                   className="text-gray-700 hover:text-rose-800 font-medium cursor-pointer"
                   onClick={() => navigate(item.path)}
                 >
-                    {item.title}
-                  </button>
+                  {item.title}
+                </button>
               )}
-            
             </div>
           ))}
         </nav>
@@ -136,7 +157,7 @@ const Header = () => {
                           key={linkIndex}
                           to={link.path}
                           className="block px-2 py-1 text-gray-700 hover:text-rose-800 rounded"
-                          onClick={() => setIsMobileMenuOpen(false)} // close menu on click
+                          onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {link.name}
                         </Link>
@@ -147,10 +168,10 @@ const Header = () => {
               ) : (
                 <button
                   className="text-gray-700 hover:text-rose-800 font-medium cursor-pointer"
-                  onClick={() => {navigate(item.path), setIsMobileMenuOpen(false)}}
+                  onClick={() => {navigate(item.path); setIsMobileMenuOpen(false);}}
                 >
-                    {item.title}
-                  </button>
+                  {item.title}
+                </button>
               )}
             </div>
           ))}
