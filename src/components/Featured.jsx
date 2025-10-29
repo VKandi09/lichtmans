@@ -6,7 +6,7 @@ const Featured = () => {
   const [featured, setFeatured] = useState([]);
 
   function capitalizeWords(str) {
-    if (!str) return '';
+    // if (!str) return '';
     return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
@@ -16,12 +16,20 @@ const Featured = () => {
         const response = await fetch(`${API_BASE}/api/products/featured`);
         if (!response.ok) throw new Error("Failed to fetch featured products");
         const data = await response.json();
-        // Capitalize the type field
+        let uniqueTypes = new Set();
         const formatted = data
-          .filter(item => item.type != null)  // Remove items without type
+          .filter(item => {
+            if (!item.type) return false; // Skip items without type
+            const lowerType = item.type.toLowerCase();
+            if (uniqueTypes.has(lowerType)) {
+              return false; // Skip duplicate type
+            }
+            uniqueTypes.add(lowerType);
+            return true; // Keep first occurrence
+          })  // Remove items without type
           .map(item => ({
           ...item,
-          type: capitalizeWords(item.type)
+          type: capitalizeWords(item.type) // Capitalize the type field
         }));
         setFeatured(formatted);
       } catch (error) {
