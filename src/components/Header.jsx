@@ -98,7 +98,7 @@ const Header = () => {
                         <Link
                           key={linkIndex}
                           to={link.path}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-rose-800 transition-colors"
+                          className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-50 hover:text-rose-800 transition-colors"
                           onClick={handleDropdownLinkClick}
                         >
                           {link.name}
