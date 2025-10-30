@@ -78,7 +78,7 @@ const SpecialOffers = () => {
               >
                 {/* Badge */}
                 {offer.badge && (
-                  <div className="absolute top-4 right-4 bg-rose-800 text-white px-3 py-1 rounded-full text-xs font-bold z-10 shadow-lg">
+                  <div className="absolute top-4 right-4 bg-rose-800 text-white px-3 py-1 rounded-full text-xs font-bold z-10 shadow-lg animate-bounce">
                     {offer.badge}
                   </div>
                 )}
