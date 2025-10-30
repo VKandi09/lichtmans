@@ -10,6 +10,8 @@ const Sidebar = ({ activePage, setActivePage }) => {
     { key: "add-product", label: "Add New Product" },
     { key: "view-events", label: "View Events" },
     { key: "add-event", label: "Add New Event" },
+    { key: "view-offers", label: "View All Offers" },
+    { key: "add-offer", label: "Add New Offer" }
   ];
 
   const handleMenuClick = (key) => {
@@ -41,7 +43,7 @@ const Sidebar = ({ activePage, setActivePage }) => {
       {/* Mobile Menu Toggle Button */}
       <button
         onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed top-2 left-4 z-40 text-gray-700 hover:text-white hover:rounded-lg p-3 hover:bg-rose-800 transition-colors"
+        className="lg:hidden fixed top-2 left-4 z-40 bg-rose-900 text-white rounded-lg p-3 hover:bg-rose-800 transition-colors"
         aria-label="Open menu"
       >
         <FiMenu size={24} />

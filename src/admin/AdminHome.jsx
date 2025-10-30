@@ -7,6 +7,8 @@ import AdminProductList from "./AdminProductList";
 import AddProduct from "./AddProduct";
 import AdminEventList from "./AdminEventList";
 import AddEvent from "./AddEvent";
+import AddOffer from "./AddOffer";
+import OffersList from "./OffersList";
 
 const AdminHome = () => {
   const [activePage, setActivePage] = useState("dashboard");
@@ -20,7 +22,8 @@ const AdminHome = () => {
       {activePage === "update-events" && <div>Update Events Coming Soon</div>}
       {activePage === "view-events" && <AdminEventList />}
       {activePage === "add-event" && <AddEvent />}
-
+      {activePage === "view-offers" && <OffersList />}
+      {activePage === "add-offer" && <AddOffer />}
       <ToastContainer position="top-right" autoClose={3000} />
     </AdminLayout>
   );

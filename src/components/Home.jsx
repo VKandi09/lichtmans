@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Hero from "./Hero";
 import Featured from "./Featured";
 import BestSellers from './BestSellers';
+import SpecialOffers from './SpecialOffers';
 import AgeVerificationModal from "../components/AgeVerification";
 
 const Home = () => {
@@ -22,6 +23,7 @@ const Home = () => {
         }`}
       >
         <Hero />
+        <SpecialOffers />
         <Featured />
         {/* <NewArrivals /> */}
         <BestSellers />

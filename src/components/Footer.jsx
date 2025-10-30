@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
 
 const Footer = () => {
   return (
@@ -14,44 +17,33 @@ const Footer = () => {
           </p>
           <div className="flex justify-center sm:justify-start space-x-4 mt-4">
             {/* Social Links */}
-            <Link to="/" className="hover:text-red-800" aria-label="Instagram">
-              <svg
-                className="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.315 2c2.43 0 2.784.013 3.808.06..."
-                  clipRule="evenodd"
-                />
-              </svg>
-            </Link>
-            <Link to="/" className="hover:text-red-800" aria-label="Twitter">
-              <svg
-                className="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M8.29 20.251c7.547 0 11.675-6.253..." />
-              </svg>
-            </Link>
-            <Link to="/" className="hover:text-red-800" aria-label="GitHub">
-              <svg
-                className="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12 2C6.477 2 2 6.484..."
-                  clipRule="evenodd"
-                />
-              </svg>
-            </Link>
+            <a 
+              href="https://instagram.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-red-800" 
+              aria-label="Instagram"
+            >
+              <FaInstagram className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://twitter.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-red-800" 
+              aria-label="Twitter"
+            >
+              <FaXTwitter className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://facebook.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-red-800" 
+              aria-label="Facebook"
+            >
+              <FaFacebook className="w-5 h-5" />
+            </a>
           </div>
         </div>
 

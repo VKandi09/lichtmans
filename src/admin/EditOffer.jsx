@@ -3,16 +3,15 @@ import { toast } from "react-toastify";
 import { FiX } from "react-icons/fi";
 import { API_BASE } from '../api';
 
-const BASE_URL = `${API_BASE}/api/events`;
+const BASE_URL = `${API_BASE}/api/offers`;
 
-const EditEvent = ({ event, onClose, refresh }) => {
+const EditOffer = ({ offer, onClose, refresh }) => {
   const [form, setForm] = useState({
-    title: event.title,
-    sponsors: event.sponsors,      //event.sponsors.join(", "),
-    date: event.date.split("T")[0],
-    time: event.time || "",
-    location: event.location || "",
-    details: event.details || "",
+    title: offer.title,
+    description: offer.description,
+    image: offer.image,
+    badge: offer.badge,
+    validUntil: offer.validUntil,
   });
 
   const [confirmAction, setConfirmAction] = useState(null);
@@ -32,21 +31,20 @@ const EditEvent = ({ event, onClose, refresh }) => {
       if (confirmAction === "save") {
         const payload = {
           ...form,
-          sponsors: form.sponsors.split(",").map((s) => s.trim()),
         };
 
-        await fetch(`${BASE_URL}/${event._id}`, {
+        await fetch(`${BASE_URL}/${offer._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-        toast.success("Event updated successfully!");
+        toast.success("Offer updated successfully!");
       } else if (confirmAction === "delete") {
-        await fetch(`${BASE_URL}/${event._id}`, {
+        await fetch(`${BASE_URL}/${offer._id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         });
-        toast.success("Event deleted successfully!");
+        toast.success("Offer deleted successfully!");
       }
 
       refresh();
@@ -84,38 +82,31 @@ const EditEvent = ({ event, onClose, refresh }) => {
             className="border p-2 w-full rounded focus:ring-2 focus:ring-rose-800 focus:outline-none"
           />
           <input
-            name="sponsors"
-            value={form.sponsors}
-            onChange={handleChange}
-            placeholder="Sponsors (comma separated)"
-            className="border p-2 w-full rounded focus:ring-2 focus:ring-rose-800 focus:outline-none"
-          />
-          <input
-            type="date"
-            name="date"
-            value={form.date}
+            type="image"
+            name="image"
+            value={form.image}
             onChange={handleChange}
             className="border p-2 w-full rounded focus:ring-2 focus:ring-rose-800 focus:outline-none"
           />
           <input
-            name="time"
-            value={form.time}
+            name="badge"
+            value={form.badge}
             onChange={handleChange}
-            placeholder="Time"
-            className="border p-2 w-full rounded focus:ring-2 focus:ring-rose-800 focus:outline-none"
-          />
-          <input
-            name="location"
-            value={form.location}
-            onChange={handleChange}
-            placeholder="Location"
+            placeholder="Badge"
             className="border p-2 w-full rounded focus:ring-2 focus:ring-rose-800 focus:outline-none"
           />
           <textarea
-            name="details"
-            value={form.details}
+            name="description"
+            value={form.description}
             onChange={handleChange}
-            placeholder="Details"
+            placeholder="Description"
+            className="border p-2 w-full rounded focus:ring-2 focus:ring-rose-800 focus:outline-none"
+          />
+          <input
+            name="validUntil"
+            value={form.validUntil}
+            onChange={handleChange}
+            placeholder="Valid Until"
             className="border p-2 w-full rounded focus:ring-2 focus:ring-rose-800 focus:outline-none"
           />
         </form>
@@ -149,7 +140,7 @@ const EditEvent = ({ event, onClose, refresh }) => {
               <p className="mb-4 text-gray-700 text-sm sm:text-base">
                 {confirmAction === "save"
                   ? "Do you want to save changes?"
-                  : "Are you sure you want to delete this event?"}
+                  : "Are you sure you want to delete this offer?"}
               </p>
               <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3">
                 <button
@@ -177,4 +168,4 @@ const EditEvent = ({ event, onClose, refresh }) => {
   );
 };
 
-export default EditEvent;
+export default EditOffer;

@@ -12,7 +12,7 @@ const BestSellers = () => {
   const [bourbonProducts, setBourbonProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-    const capitalizeFirstChar = (str) => {
+  const capitalizeFirstChar = (str) => {
     if (!str) return str;
     return str
       .split(" ")
@@ -33,7 +33,7 @@ const BestSellers = () => {
           type: capitalizeFirstChar(product.type),
           brand: capitalizeFirstChar(product.brand),
           subType: capitalizeFirstChar(product.subType),
-        }))
+        }));
         setBourbonProducts(formattedData);
       } catch (err) {
         console.error("Error fetching bourbon products:", err);
@@ -47,66 +47,104 @@ const BestSellers = () => {
   if (loading) return <p className="text-center py-10 text-gray-600">Loading best sellers...</p>;
 
   return (
-    <section className="py-15 bg-white">
+    <section className="py-12 sm:py-15 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <h1 className="text-3xl sm:text-4xl text-center justify-center text-rose-900 font-bold mb-3">Best Sellers</h1>
-        <div className="flex w-full justify-center items-center sm:justify-end mb-2">
-          {/* <h1 className="text-4xl text-rose-800 font-bold">Best Sellers</h1> */}
+        <h1 className="text-3xl sm:text-4xl text-center text-rose-900 font-bold mb-3">
+          Best Sellers
+        </h1>
+        <div className="flex w-full justify-center sm:justify-end items-center mb-4">
           <a
             href="/products?subType=bourbon"
-            className="flex items-center text-gray-700 hover:text-red-800 transition"
+            className="flex items-center text-sm sm:text-base text-gray-700 hover:text-red-800 transition"
           >
             View All
-            <FaArrowRight className="ml-2" />
+            <FaArrowRight className="ml-2 text-xs sm:text-sm" />
           </a>
         </div>
 
-        {/* Arrows + Swiper */}
+        {/* Swiper Container */}
         <div className="relative">
-          {/* Left Arrow */}
-          <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border rounded-full shadow hover:text-red-800 text-gray-700 hidden sm:flex">
-            <FaChevronLeft />
-          </button>
-
-          <div className="relative w-full">
-            {bourbonProducts.length === 0 ? (
-              <p className="text-gray-600 text-center py-10">No bourbon products available.</p>
-            ) : (
-              <Swiper
-                slidesPerView={1.1}
-                centeredSlides={true}
-                spaceBetween={16}
-                loop={true}
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
-                pagination={{ clickable: true, el: ".custom-pagination" }}
-                navigation={{
-                  nextEl: ".swiper-button-next-custom",
-                  prevEl: ".swiper-button-prev-custom",
-                }}
-                modules={[Autoplay, Pagination, Navigation]}
-                breakpoints={{
-                  320: { slidesPerView: 1 },
-                  480: { slidesPerView: 3, centeredSlides: true },
-                  640: { slidesPerView: 3, centeredSlides: false },
-                  768: { slidesPerView: 3, centeredSlides: false },
-                  1024: { slidesPerView: 4, centeredSlides: false },
-                }}
-                className="w-full pb-10"
+          {bourbonProducts.length === 0 ? (
+            <p className="text-gray-600 text-center py-10">No bourbon products available.</p>
+          ) : (
+            <>
+              {/* Left Arrow - Desktop Only */}
+              <button 
+                className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border rounded-full shadow hover:text-red-800 text-gray-700 hidden md:flex items-center justify-center"
+                aria-label="Previous slide"
               >
-                {bourbonProducts.map((product) => (
-                  <SwiperSlide key={product._id}>
-                    <ProductCard product={product} />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            )}
-            {/* Right Arrow */}
-            <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border rounded-full shadow hover:text-red-800 text-gray-700 hidden sm:flex">
-              <FaChevronRight />
-            </button>
-            <div className="custom-pagination flex justify-center mt-4"></div>
-          </div>
+                <FaChevronLeft />
+              </button>
+
+              <div className="max-w-sm mx-auto sm:max-w-none">
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={16}
+                  centeredSlides={true}
+                  loop={true}
+                  autoplay={{ delay: 4000, disableOnInteraction: false }}
+                  pagination={{ 
+                    clickable: true, 
+                    el: ".custom-pagination",
+                    bulletClass: "swiper-pagination-bullet",
+                    bulletActiveClass: "swiper-pagination-bullet-active"
+                  }}
+                  navigation={{
+                    nextEl: ".swiper-button-next-custom",
+                    prevEl: ".swiper-button-prev-custom",
+                  }}
+                  modules={[Autoplay, Pagination, Navigation]}
+                  breakpoints={{
+                    // Mobile: 1 card centered
+                    320: { 
+                      slidesPerView: 1,
+                      spaceBetween: 16,
+                      centeredSlides: true
+                    },
+                    // Small tablets: 2 cards
+                    640: { 
+                      slidesPerView: 2,
+                      spaceBetween: 20,
+                      centeredSlides: false
+                    },
+                    // Tablets: 3 cards
+                    768: { 
+                      slidesPerView: 3,
+                      spaceBetween: 20,
+                      centeredSlides: false
+                    },
+                    // Desktop: 4 cards
+                    1024: { 
+                      slidesPerView: 4,
+                      spaceBetween: 24,
+                      centeredSlides: false
+                    },
+                  }}
+                  className="w-full pb-12"
+                >
+                  {bourbonProducts.map((product) => (
+                    <SwiperSlide key={product._id} className="!flex !justify-center">
+                      <div className="w-full max-w-xs mx-auto">
+                        <ProductCard product={product} />
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+
+              {/* Right Arrow - Desktop Only */}
+              <button 
+                className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 bg-white border rounded-full shadow hover:text-red-800 text-gray-700 hidden md:flex items-center justify-center"
+                aria-label="Next slide"
+              >
+                <FaChevronRight />
+              </button>
+
+              {/* Pagination Dots */}
+              <div className="custom-pagination flex justify-center mt-2"></div>
+            </>
+          )}
         </div>
       </div>
     </section>
