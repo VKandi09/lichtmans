@@ -74,7 +74,7 @@ const SpecialOffers = () => {
               <div
                 key={offer._id}
                 onClick={() => openModal(offer)}
-                className="w-full h-[400px] sm:w-[50%] lg:w-[35%] bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2"
+                className="relative w-full h-[400px] sm:w-[50%] lg:w-[35%] bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-2"
               >
                 {/* Badge */}
                 {offer.badge && (
