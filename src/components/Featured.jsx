@@ -4,6 +4,7 @@ import { API_BASE } from "../api";
 
 const Featured = () => {
   const [featured, setFeatured] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   function capitalizeWords(str) {
     // if (!str) return '';
@@ -32,12 +33,16 @@ const Featured = () => {
           type: capitalizeWords(item.type) // Capitalize the type field
         }));
         setFeatured(formatted);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching featured products:", error);
+        setLoading(false);
       }
     };
     fetchFeatured();
   }, []);
+
+  const skeletons = Array(4).fill(0);
 
   return (
     <section className="py-15 bg-black/5">
@@ -61,23 +66,36 @@ const Featured = () => {
               gridTemplateColumns: `repeat(auto-fit, minmax(200px, 1fr))`,
             }}
           >
-            {featured.map((item, index) => (
-              <Link
-                key={index}
-                to={`/products?type=${(item.type)}`}
-                className="bg-white w-60 h-60 rounded-lg shadow hover:shadow-lg transition duration-300 border border-gray-200 p-4 flex flex-col items-center cursor-pointer"
-              >
-                <img 
-                  src={item.image || '/images/placeholder-bottle.png'} 
-                  alt={item.type} 
-                  className="h-40 w-40 object-contain mb-3"
-                  onError={(e) => { e.target.onerror = null; e.target.src = '/images/placeholder-bottle.png'; }}
-                />
-                <h2 className="text-md font-semibold text-gray-700 text-center">
-                  {item.type}
-                </h2>
-              </Link>
-            ))}
+            {loading
+              ? skeletons.map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-60 h-60 bg-white rounded-lg shadow border border-gray-200 p-4 flex flex-col items-center animate-pulse"
+                  >
+                    <div className="h-40 w-40 bg-gray-300 rounded-md mb-3"></div>
+                    <div className="h-4 w-24 bg-gray-300 rounded"></div>
+                  </div>
+                ))
+              : featured.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={`/products?type=${item.type}`}
+                    className="bg-white w-60 h-60 rounded-lg shadow hover:shadow-lg transition duration-300 border border-gray-200 p-4 flex flex-col items-center cursor-pointer"
+                  >
+                    <img
+                      src={item.image || "/images/placeholder-bottle.png"}
+                      alt={item.type}
+                      className="h-40 w-40 object-contain mb-3"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/images/placeholder-bottle.png";
+                      }}
+                    />
+                    <h2 className="text-md font-semibold text-gray-700 text-center">
+                      {item.type}
+                    </h2>
+                  </Link>
+                ))}
           </div>
         </div>
       </div>

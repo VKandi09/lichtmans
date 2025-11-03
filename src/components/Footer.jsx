@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="flex justify-center sm:justify-start space-x-4 mt-4">
             {/* Social Links */}
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/lichtmanwineandliquor/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-red-800" 
@@ -26,7 +26,7 @@ const Footer = () => {
             >
               <FaInstagram className="w-5 h-5" />
             </a>
-            <a 
+            {/* <a 
               href="https://twitter.com" 
               target="_blank" 
               rel="noopener noreferrer"
@@ -34,9 +34,9 @@ const Footer = () => {
               aria-label="Twitter"
             >
               <FaXTwitter className="w-5 h-5" />
-            </a>
+            </a> */}
             <a 
-              href="https://facebook.com" 
+              href="https://www.facebook.com/lichtmanswineandliquor" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-red-800" 
@@ -64,7 +64,7 @@ const Footer = () => {
           <div>
             <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/about" className="hover:text-red-800">About Us</Link></li>
+              {/* <li><Link to="/about" className="hover:text-red-800">About Us</Link></li> */}
               <li><Link to="/products" className="hover:text-red-800">View All</Link></li>
               <li><Link to="/specials" className="hover:text-red-800">Specials</Link></li>
               <li><Link to="/contact" className="hover:text-red-800">Contact Us</Link></li>

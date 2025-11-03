@@ -67,12 +67,11 @@ const ProductsList = () => {
           brand: capitalizeWords(p.brand),
           subType: capitalizeWords(p.subType),
         }));
-
+        
         setFilteredProducts(formattedData);
         setBrands([...new Set(formattedData.map(p => p.brand).filter(Boolean))]);
         setTypes([...new Set(formattedData.map(p => p.type).filter(Boolean))]);
         setSubTypes([...new Set(formattedData.map(p => p.subType).filter(Boolean))]);
-
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -132,7 +131,25 @@ const ProductsList = () => {
     displayedProducts = [...displayedProducts].sort((a, b) => b.price - a.price);
   }
 
-  if (loading) return <p className='mt-20 text-center text-gray-600'>Loading products...</p>;
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center mt-10">
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">Loading Products...</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full px-4 max-w-7xl">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-lg shadow-md p-4 w-full animate-pulse"
+            >
+              <div className="h-48 bg-gray-300 rounded-md mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   // Remove chip
   const removeChip = (filterType, value) => {
@@ -361,23 +378,6 @@ const ProductsList = () => {
         )}
         {/* Products Grid */}
         <div className="items-center flex flex-col w-full px-2 lg:px-4">
-          {/* <div className='items-center justify-center mb-6'>          
-            <h1 className="text-2xl font-bold mb-4">
-              {subTypeFilter
-                ? `${capitalizeWords(subTypeFilter)}`
-                : typeFilter
-                ? `${capitalizeWords(typeFilter)}`
-                : location.pathname === "/products/specials"
-                ? "Special"
-                : "All Products"}
-            </h1>
-            <p className="text-gray-600 mb-6">
-              {displayedProducts.length === 1
-                ? `${displayedProducts.length} product found`
-                : `${displayedProducts.length} products found`}
-            </p>
-          </div> */}
-
           <main className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {displayedProducts.length === 0 ? (
               <p className="text-gray-600 col-span-full text-center">

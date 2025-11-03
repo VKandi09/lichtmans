@@ -35,16 +35,22 @@ const BestSellers = () => {
           subType: capitalizeFirstChar(product.subType),
         }));
         setBourbonProducts(formattedData);
+        setLoading(false);
       } catch (err) {
         console.error("Error fetching bourbon products:", err);
-      } finally {
         setLoading(false);
       }
     };
     fetchBourbonProducts();
   }, []);
 
-  if (loading) return <p className="text-center py-10 text-gray-600">Loading best sellers...</p>;
+  const SkeletonCard = () => (
+    <div className="w-full max-w-xs mx-auto bg-white rounded-lg shadow-md p-4 animate-pulse">
+      <div className="w-full h-40 bg-gray-300 rounded-md mb-4"></div>
+      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+      <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+    </div>
+  );
 
   return (
     <section className="py-12 sm:py-15 bg-white">
@@ -65,8 +71,16 @@ const BestSellers = () => {
 
         {/* Swiper Container */}
         <div className="relative">
-          {bourbonProducts.length === 0 ? (
-            <p className="text-gray-600 text-center py-10">No bourbon products available.</p>
+          {loading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <SkeletonCard key={index} />
+              ))}
+            </div>
+          ) : bourbonProducts.length === 0 ? (
+            <p className="text-gray-600 text-center py-10">
+              No bourbon products available.
+            </p>
           ) : (
             <>
               {/* Left Arrow - Desktop Only */}
